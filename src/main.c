@@ -23,7 +23,7 @@ void intro()
     printf("en zombies assoiffés de sang. Le monde tel que nous le connaissions a disparu, et seuls les\n");
     printf("plus courageux ou les plus chanceux ont survécu.\n\n");
 
-    printf("Vous faites partie d'un groupe de survivants, barricadés dans un abri temporaire, mais\n");
+    printf("Vous faites partie d'un groupe de survivants, barricadés près d'un bunker, mais\n");
     printf("les ressources commencent à manquer. Chaque jour est une lutte pour la survie et chaque\n");
     printf("décision peut être la dernière.\n\n");
 
