@@ -1,9 +1,12 @@
 #include <stdio.h>
 
 void intro();
+void menu();
 
 int main(int argc, char **argv) {
     intro();
+
+    menu();
 
     return 0;
 }
@@ -31,4 +34,42 @@ void intro()
     printf("Les zombies rôdent, et des décisions cruciales vous attendent.\n\n");
 
     printf(">>> Préparez-vous à faire face à l'apocalypse. Saurez-vous survivre ? <<<\n\n");
+}
+
+void menu()
+{
+    char choix = ' ';
+
+    while (choix != 'Q')
+    {
+        printf("\n*** Menu principal ***\n");
+        printf("Q) Quitter\n");
+        printf("C) Créer une partie\n");
+        printf("R) Reprendre une partie\n");
+        printf("A) Mode Admin\n");
+        printf("Votre choix : ");
+        scanf(" %c", &choix); // Lecture du caractère choisi par l'utilisateur
+
+        switch (choix)
+        {
+            case 'q':
+            case 'Q':
+                printf("\nFermeture du programme.\n");
+                break;
+            case 'c':
+            case 'C':
+                printf("\nCréer une partie.\n");
+                break;
+            case 'r':
+            case 'R':
+                printf("\nReprendre une partie.\n");
+                break;
+            case 'a':
+            case 'A':
+                printf("\nMode Admin.\n");
+                break;
+            default:
+                printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
+        }
+    }
 }
