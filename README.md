@@ -14,7 +14,7 @@ Vous devez créer un jeu textuel interactif, inspiré par la mécanique d'un cha
 
 ### Thème
 
-**Zombieland**
+**APOCALYPSE : Survive or Die**
 
 **Description :**
 
