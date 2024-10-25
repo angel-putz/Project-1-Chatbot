@@ -6,6 +6,7 @@
 #define NON 1
 #define TAILLE_NOM 51
 #define TAILLE_MESSAGE 1001
+#define TAILLE_COMPETENCE 101
 
 // Personnages Non Jouables (PNJ)
 typedef struct {
@@ -20,6 +21,7 @@ typedef struct {
     int pv;
     int faim;
     bool sante;
+    char competence[TAILLE_COMPETENCE];
 } PERSONNAGE;
 
 // Zombies
