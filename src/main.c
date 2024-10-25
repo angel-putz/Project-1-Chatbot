@@ -1,7 +1,15 @@
 #include <stdio.h>
+#include <string.h>
+#include <termios.h>
+#include <unistd.h>
+
+#define TAILLE_MAX_MDP 21
+#define MOT_DE_PASSE_ADMIN "Admin123!"
 
 void intro();
 void menu();
+void demander_mdp();
+void menu_admin();
 
 int main(int argc, char **argv) {
     intro();
@@ -34,6 +42,7 @@ void intro()
     printf("Les zombies rôdent, et des décisions cruciales vous attendent.\n\n");
 
     printf(">>> Préparez-vous à faire face à l'apocalypse. Saurez-vous survivre ? <<<\n\n");
+    return;
 }
 
 void menu()
@@ -47,12 +56,12 @@ void menu()
         printf("C) Créer une partie\n");
         printf("R) Reprendre une partie\n");
         printf("A) Mode Admin\n");
-        printf("Votre choix : ");
+        printf("\nVotre choix : ");
         scanf(" %c", &choix); // Lecture du caractère choisi par l'utilisateur
+        getchar(); // Vider le tampon d'entrée pour enlever le caractère '\n'
 
         switch (choix)
         {
-            case 'q':
             case 'Q':
                 printf("\nFermeture du programme.\n");
                 break;
@@ -67,9 +76,78 @@ void menu()
             case 'a':
             case 'A':
                 printf("\nMode Admin.\n");
+                demander_mdp();
                 break;
             default:
                 printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
         }
     }
+    return;
+}
+
+void demander_mdp()
+{
+    char mdp[TAILLE_MAX_MDP];
+    int tentatives = 3;
+
+    while (tentatives > 0) {
+        printf("\nVeuillez entrer votre mot de passe : ");
+
+        // Désactiver l'affichage des caractères dans le terminal
+        struct termios oldt, newt;
+        tcgetattr(STDIN_FILENO, &oldt);  // Obtenir les paramètres actuels du terminal
+        newt = oldt;
+        newt.c_lflag &= ~ECHO;           // Désactiver l'affichage des caractères
+        tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+        // Lecture du mot de passe
+        if (fgets(mdp, TAILLE_MAX_MDP, stdin) != NULL) {
+            mdp[strcspn(mdp, "\n")] = '\0'; // Retirer le retour à la ligne
+        }
+
+        // Rétablir les paramètres du terminal
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+
+        // Vérification du mot de passe
+        if (strlen(mdp) == 0) {
+            printf("\nErreur : le mot de passe ne peut pas être vide.\n\n");
+            continue;
+        } else if (strcmp(mdp, MOT_DE_PASSE_ADMIN) == 0) {
+            // mdp correct \n\n
+            menu_admin();
+            return;  // Sortie de la fonction si le mot de passe est correct
+        } else {
+            printf("\nMot de passe incorrect. Il vous reste %d tentative(s).\n", tentatives - 1);
+        }
+
+        tentatives--;  // Décrémenter le nombre de tentatives restantes
+    }
+
+    // Si toutes les tentatives sont épuisées
+    printf("Erreur : trop de tentatives échouées. Accès refusé.\n");
+}
+
+void menu_admin()
+{
+    char choix = ' ';
+
+    while (choix != 'Q')
+    {
+        printf("\n*** Menu Admin ***\n");
+        printf("Q) Retour au menu principal\n");
+        printf("U) Gérer Utilisateurs\n");
+        printf("\nVotre choix : ");
+        scanf(" %c", &choix); // Lecture du caractère choisi par l'utilisateur
+        getchar(); // Vider le tampon d'entrée pour enlever le caractère '\n'
+
+        switch (choix)
+        {
+            case 'Q':
+                printf("\nRetour au menu principal.\n");
+                break;
+            default:
+                printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
+        }
+    }
+    return;
 }
