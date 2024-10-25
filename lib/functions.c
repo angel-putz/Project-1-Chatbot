@@ -1,3 +1,4 @@
+/*
 Les Fonctions :
 - ecriture_log
 - ouverture_fichier_log
@@ -21,3 +22,4 @@ Les Fonctions :
 
 - soigner (fait par la soigneuse)
 - manger (fait par le cuistot)
+*/

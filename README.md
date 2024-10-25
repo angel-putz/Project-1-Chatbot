@@ -23,7 +23,7 @@ Un jeu où le joueur doit survivre dans un monde post-apocalyptique infesté de 
 **Fonctionnalités :**
 
 1. Création du Personnage :
-Background : Inventer une histoire générique pour la cr&ation de n'importe quel PP.
+Background : Inventer une histoire générique pour la création de n'importe quel PP.
 Traits de Personnalité Évolutifs : Introduire des traits de personnalité qui peuvent changer en fonction des décisions du joueur, ajoutant une dimension dynamique au personnage.
 
 2. Création des PNJs :
@@ -55,4 +55,4 @@ Ce dernier pourra par exemple créer un nouveau PNJ, le modifier ou le supprimer
 
 ### Description technique
 
-Pour consulter la description technique, référez-vous à la documentation : `./P22_Projet_FAVAREL_PUTZ_BOISSIE.docx`
+Pour consulter la description technique, référez-vous à la documentation : `./docs/P22_Projet_FAVAREL_PUTZ_BOISSIE.docx`
