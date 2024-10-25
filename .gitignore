@@ -1,10 +1,4 @@
-# Ignore all
-*
+# Ajouter ici les fichiers qui ne doivent pas être envoyés sur le repo distant
 
-# Unignore all with extensions
-!*.*
-
-# Unignore all dirs
-!*/
-
+# Journal de bord pour suivre son avancée
 clement.md

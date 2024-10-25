@@ -1,0 +1,8 @@
+# Ignore tous les fichiers
+*
+
+# N'ignore pas les fichiers avec extensions
+!*.*
+
+# N'ignore pas les repertoires
+!*/
