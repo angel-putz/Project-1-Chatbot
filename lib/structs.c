@@ -15,7 +15,7 @@ typedef struct {
     bool mort;
 } PNJ;
 
-// Personnages de l'histoire (coéquipiers)
+// Personnages de l'histoire (joueur principal et coéquipiers)
 typedef struct {
     char nom[TAILLE_NOM];
     int pv;
