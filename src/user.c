@@ -103,6 +103,8 @@ void listerUtilisateurs(FILE *bdd_utilisateurs) {
     if (!utilisateurTrouve) {
         printf("Il n'y a aucun utilisateur enregistré pour l'instant.\n");
     }
+
+    usleep(2000000);
 }
 
 void afficherUtilisateur(UTILISATEUR *utilisateur) {
@@ -119,6 +121,8 @@ void afficherUtilisateur(UTILISATEUR *utilisateur) {
         }
         printf("\n");
     }
+
+    usleep(2000000);
 }
 
 void creerUtilisateur(FILE *bdd_utilisateurs) {
@@ -138,7 +142,6 @@ void creerUtilisateur(FILE *bdd_utilisateurs) {
     } else {
         // Initialisation des valeurs par défaut
         utilisateur.id = nombre_utilisateurs + 1;
-        // ... (autres initialisations)
 
         // Écriture de la personne dans le fichier
         fseek(bdd_utilisateurs, 0, SEEK_END);
@@ -148,6 +151,8 @@ void creerUtilisateur(FILE *bdd_utilisateurs) {
             printf("Les informations ont été enregistrées avec succès.\n");
         }
     }
+
+    usleep(2000000);
 }
 
 int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier) {
@@ -181,8 +186,6 @@ void modifierUtilisateur(FILE *bdd_utilisateurs) {
             strcpy(utilisateur_a_modifier.pseudo, pseudo_cherche);
         }
 
-        // ... (autres modifications possibles, comme les parties jouées)
-
         // Réécrire l'utilisateur modifié dans le fichier
         fseek(bdd_utilisateurs, -sizeof(UTILISATEUR), SEEK_CUR); // Repositionner le curseur
         fwrite(&utilisateur_a_modifier, sizeof(UTILISATEUR), 1, bdd_utilisateurs);
@@ -190,6 +193,8 @@ void modifierUtilisateur(FILE *bdd_utilisateurs) {
     } else {
         printf("Utilisateur non trouvé.\n");
     }
+
+    usleep(2000000);
 }
 
 void supprimerUtilisateur(FILE *bdd_utilisateurs) {
@@ -216,6 +221,8 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs) {
     } else {
         printf("Utilisateur non trouvé.\n");
     }
+
+    usleep(2000000);
 }
 
 UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche)
