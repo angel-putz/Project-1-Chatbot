@@ -11,12 +11,14 @@ typedef struct
 {
     int id;
     char pseudo[TAILLE_PSEUDO];
+    int partieId;
 }UTILISATEUR;
 
 void menuUtilisateur();
 void listerUtilisateurs(FILE *bdd_utilisateurs);
 void afficherUtilisateur(UTILISATEUR *utilisateur);
 void creerUtilisateur(FILE *bdd_utilisateurs);
+void consulterUtilisateur(FILE *bdd_utilisateurs);
 int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier);
 void modifierUtilisateur(FILE *bdd_utilisateurs);
 void supprimerUtilisateur(FILE *bdd_utilisateurs);
@@ -58,6 +60,7 @@ void menuUtilisateur()
             case 'c':
             case 'C':
                 printf("\nConsulter les informations d'un utilisateur\n");
+                consulterUtilisateur(bdd_utilisateurs);
                 break;
             case 'a':
             case 'A':
@@ -132,6 +135,22 @@ void creerUtilisateur(FILE *bdd_utilisateurs) {
         } else {
             printf("Les informations ont été enregistrées avec succès.\n");
         }
+    }
+}
+
+void consulterUtilisateur(FILE *bdd_utilisateurs) {
+    char pseudo_cherche[TAILLE_PSEUDO];
+    UTILISATEUR utilisateur;
+
+    printf("Entrez le pseudo de l'utilisateur à consulter : ");
+    scanf("%s", pseudo_cherche);
+
+    utilisateur = rechercherUtilisateurParNom(bdd_utilisateurs, pseudo_cherche);
+
+    if (utilisateur.id != 0) {
+        afficherUtilisateur(&utilisateur);
+    } else {
+        printf("Utilisateur non trouvé.\n");
     }
 }
 
