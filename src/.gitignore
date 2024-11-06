@@ -2,7 +2,8 @@
 *
 
 # N'ignore pas les fichiers avec extensions
-!*.*
+!*.c
+!*.h
 
 # N'ignore pas les repertoires
 !*/
