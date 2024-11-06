@@ -21,6 +21,9 @@ int main(int argc, char **argv) {
 
 void intro()
 {
+    // Clear le terminal avant d'afficher l'intro
+    printf("\e[1;1H\e[2J");
+
     printf("   _____ __________________  _________     _____  .____    _____.___.__________  ____________________ \n");
     printf("  /  _  \\______    \\_____  \\ \\_   ___ \\   /  _  \\ |    |   \\__  |   |\\______   \\/   _____/\\_   _____/ \n");
     printf(" /  /_\\  \\|     ___//   |   \\/    \\  \\/  /  /_\\  \\|    |    /   |   | |     ___/\\_____  \\  |    __)_  \n");
@@ -42,6 +45,7 @@ void intro()
     printf("Les zombies rôdent, et des décisions cruciales vous attendent.\n\n");
 
     printf(">>> Préparez-vous à faire face à l'apocalypse. Saurez-vous survivre ? <<<\n\n");
+    usleep(2000000);
     return;
 }
 
