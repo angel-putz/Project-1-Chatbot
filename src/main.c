@@ -2,6 +2,7 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+#include "fichier.c"
 #include "user.c"
 
 #define TAILLE_MAX_MDP 21
