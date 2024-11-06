@@ -2,18 +2,18 @@
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
+#include "user.c"
 
 #define TAILLE_MAX_MDP 21
 #define MOT_DE_PASSE_ADMIN "Admin123!"
 
 void intro();
 void menu();
-void demander_mdp();
-void menu_admin();
+void demanderMdp();
+void menuAdmin();
 
 int main(int argc, char **argv) {
     intro();
-
     menu();
 
     return 0;
@@ -76,16 +76,17 @@ void menu()
             case 'a':
             case 'A':
                 printf("\nMode Admin.\n");
-                demander_mdp();
+                demanderMdp();
                 break;
             default:
                 printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
+                break;
         }
     }
     return;
 }
 
-void demander_mdp()
+void demanderMdp()
 {
     char mdp[TAILLE_MAX_MDP];
     int tentatives = 3;
@@ -114,7 +115,7 @@ void demander_mdp()
             continue;
         } else if (strcmp(mdp, MOT_DE_PASSE_ADMIN) == 0) {
             // mdp correct \n\n
-            menu_admin();
+            menuAdmin();
             return;  // Sortie de la fonction si le mot de passe est correct
         } else {
             printf("\nMot de passe incorrect. Il vous reste %d tentative(s).\n", tentatives - 1);
@@ -127,26 +128,32 @@ void demander_mdp()
     printf("Erreur : trop de tentatives échouées. Accès refusé.\n");
 }
 
-void menu_admin()
+void menuAdmin()
 {
     char choix = ' ';
 
-    while (choix != 'Q')
+    while (choix != 'R')
     {
-        printf("\n*** Menu Admin ***\n");
-        printf("Q) Retour au menu principal\n");
-        printf("U) Gérer Utilisateurs\n");
+        printf("\n\n*** Menu Admin ***\n");
+        printf("R) Retour au menu principal\n");
+        printf("U) Gérer les utilisateurs\n");
         printf("\nVotre choix : ");
         scanf(" %c", &choix); // Lecture du caractère choisi par l'utilisateur
         getchar(); // Vider le tampon d'entrée pour enlever le caractère '\n'
 
         switch (choix)
         {
-            case 'Q':
+            case 'R':
                 printf("\nRetour au menu principal.\n");
+                break;
+            case 'u':
+            case 'U':
+                printf("\nGérer les utilisateurs\n");
+                menuUtilisateur();
                 break;
             default:
                 printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
+                break;
         }
     }
     return;
