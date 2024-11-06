@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <string.h>
-#include "fichier.c"
 
 #define TAILLE_PSEUDO 21
 #define OUI 0
