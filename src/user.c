@@ -7,14 +7,11 @@
 #define NON 1
 #define NOM_FICHIER "utilisateurs.bin"
 #define NOM_DOSSIER "bdd"
-#define MAX_PARTIES 3
 
 typedef struct
 {
     int id;
     char pseudo[TAILLE_PSEUDO];
-    int parties[MAX_PARTIES];
-    int nombre_parties;
 }UTILISATEUR;
 
 void menuUtilisateur();
@@ -103,26 +100,12 @@ void listerUtilisateurs(FILE *bdd_utilisateurs) {
     if (!utilisateurTrouve) {
         printf("Il n'y a aucun utilisateur enregistré pour l'instant.\n");
     }
-
-    usleep(2000000);
 }
 
 void afficherUtilisateur(UTILISATEUR *utilisateur) {
     printf("\nInformations de l'utilisateur :\n");
     printf("  - ID : %d\n", utilisateur->id);
     printf("  - Pseudo : %s\n", utilisateur->pseudo);
-
-    if (utilisateur->nombre_parties == 0) {
-        printf("  - Parties jouées : 0\n");
-    } else {
-        printf("  - Parties jouées : ");
-        for (int i = 0; i < utilisateur->nombre_parties; ++i) {
-            printf("%d ", utilisateur->parties[i]);
-        }
-        printf("\n");
-    }
-
-    usleep(2000000);
 }
 
 void creerUtilisateur(FILE *bdd_utilisateurs) {
@@ -151,8 +134,6 @@ void creerUtilisateur(FILE *bdd_utilisateurs) {
             printf("Les informations ont été enregistrées avec succès.\n");
         }
     }
-
-    usleep(2000000);
 }
 
 int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier) {
@@ -193,8 +174,6 @@ void modifierUtilisateur(FILE *bdd_utilisateurs) {
     } else {
         printf("Utilisateur non trouvé.\n");
     }
-
-    usleep(2000000);
 }
 
 void supprimerUtilisateur(FILE *bdd_utilisateurs) {
@@ -221,8 +200,6 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs) {
     } else {
         printf("Utilisateur non trouvé.\n");
     }
-
-    usleep(2000000);
 }
 
 UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche)
