@@ -46,7 +46,6 @@ void intro()
     printf("Les zombies rôdent, et des décisions cruciales vous attendent.\n\n");
 
     printf(">>> Préparez-vous à faire face à l'apocalypse. Saurez-vous survivre ? <<<\n\n");
-    usleep(2000000);
     return;
 }
 
@@ -93,6 +92,7 @@ void menu()
 
 void demanderMdp()
 {
+    struct termios oldt, newt;
     char mdp[TAILLE_MAX_MDP];
     int tentatives = 3;
 
@@ -100,7 +100,6 @@ void demanderMdp()
         printf("\nVeuillez entrer votre mot de passe : ");
 
         // Désactiver l'affichage des caractères dans le terminal
-        struct termios oldt, newt;
         tcgetattr(STDIN_FILENO, &oldt);  // Obtenir les paramètres actuels du terminal
         newt = oldt;
         newt.c_lflag &= ~ECHO;           // Désactiver l'affichage des caractères
