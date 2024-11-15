@@ -1,5 +1,15 @@
+/*
+@author = clementfavarel
+*/
+
+#define NOM_DOSSIER_BDD "bdd"
+#define NOM_FICHIER_PARTIES "parties.bin"
+
 void afficherTexteIntro();
 void afficherMenuPrincipal();
+FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier);
+void creerPartie(FILE *bdd_parties);
+void fermerFichier(FILE *fichier_ouvert);
 void demanderMdpAdmin();
 
 void afficherTexteIntro()
@@ -54,6 +64,10 @@ void afficherMenuPrincipal()
             case 'c':
             case 'C':
                 printf("\nCréer une partie.\n");
+                FILE *bdd_parties = NULL;
+	            bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
+                creerPartie(bdd_parties);
+                fermerFichier(bdd_parties);
                 break;
             case 'r':
             case 'R':

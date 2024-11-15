@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #define TAILLE_MAX_MDP 21
 #define MOT_DE_PASSE_ADMIN "Admin123!"
 

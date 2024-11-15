@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #ifdef _WIN32
     #include <direct.h>
     #define MKDIR(dossier) _mkdir(dossier)
@@ -7,7 +11,7 @@
 #endif
 
 FILE *ouvrirFichier(char *nom_fichier);
-void fermerFichier(FILE*fichier_ouvert);
+void fermerFichier(FILE *fichier_ouvert);
 FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier);
 
 FILE *ouvrirFichier(char *nom_fichier)

@@ -1,8 +1,12 @@
+/*
+@author = clementfavarel
+*/
+
 #define TAILLE_PSEUDO 21
 #define OUI 0
 #define NON 1
-#define NOM_FICHIER "utilisateurs.bin"
-#define NOM_DOSSIER "bdd"
+#define NOM_DOSSIER_BDD "bdd"
+#define NOM_FICHIER_UTILISATEURS "utilisateurs.bin"
 
 typedef struct
 {
@@ -19,13 +23,13 @@ void consulterUtilisateur(FILE *bdd_utilisateurs);
 int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier);
 void modifierUtilisateur(FILE *bdd_utilisateurs);
 void supprimerUtilisateur(FILE *bdd_utilisateurs);
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche);
+UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche);
 int compterNombreUtilisateurs(FILE *bdd_utilisateurs);
 
 void afficherMenuUtilisateur()
 {
     FILE *bdd_utilisateurs = NULL;
-	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER, NOM_FICHIER);
+	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
 
     UTILISATEUR utilisateur;
 
@@ -217,7 +221,7 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs) {
     }
 }
 
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche)
+UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche)
 {
     UTILISATEUR utilisateur;
 
