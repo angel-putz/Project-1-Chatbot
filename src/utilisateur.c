@@ -19,7 +19,7 @@ void consulterUtilisateur(FILE *bdd_utilisateurs);
 int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier);
 void modifierUtilisateur(FILE *bdd_utilisateurs);
 void supprimerUtilisateur(FILE *bdd_utilisateurs);
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche);
+UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche);
 int compterNombreUtilisateurs(FILE *bdd_utilisateurs);
 
 void afficherMenuUtilisateur()
@@ -217,7 +217,7 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs) {
     }
 }
 
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche)
+UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche)
 {
     UTILISATEUR utilisateur;
 
