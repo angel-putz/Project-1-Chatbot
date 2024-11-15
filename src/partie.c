@@ -9,34 +9,36 @@ typedef struct
     int id;
     char nom[TAILLE_NOM_PARTIE];
     int utilisateurId;
-}PARTIE;
+} PARTIE;
 
-int compterNombreParties(FILE *bdd_parties);
-int verifierExistencePartie(FILE *bdd_parties, const char *nom_partie_a_verifier);
-void creerPartie(FILE *bdd_parties);
-PARTIE rechercherPartieParNom(FILE *bdd_parties, const char *nom_cherche);
+int compterNombreParties(FILE *bddParties);
+int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier);
+void creerPartie(FILE *bddParties);
+PARTIE rechercherPartieParNom(FILE *bddParties, const char *nomCherche);
 void reprendrePartie();
 
-int compterNombreParties(FILE *bdd_parties)
+int compterNombreParties(FILE *bddParties)
 {
     PARTIE partie;
-    int nombre_parties = 0;
+    int nombreParties = 0;
 
-    fseek(bdd_parties, 0, SEEK_SET);
-    while (fread(&partie, sizeof(PARTIE), 1, bdd_parties))
+    fseek(bddParties, 0, SEEK_SET);
+    while (fread(&partie, sizeof(PARTIE), 1, bddParties))
     {
-        nombre_parties = nombre_parties + 1;
+        nombreParties = nombreParties + 1;
     }
 
-    return nombre_parties;
+    return nombreParties;
 }
 
-int verifierExistencePartie(FILE *bdd_parties, const char *nom_partie_a_verifier)
+int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier)
 {
     PARTIE partie;
-    fseek(bdd_parties, 0, SEEK_SET);
-    while (fread(&partie, sizeof(PARTIE), 1, bdd_parties)) {
-        if (strcmp(partie.nom, nom_partie_a_verifier) == 0) {
+    fseek(bddParties, 0, SEEK_SET);
+    while (fread(&partie, sizeof(PARTIE), 1, bddParties))
+    {
+        if (strcmp(partie.nom, nomPartieAVerifier) == 0)
+        {
             return 1;
         }
     }
@@ -44,26 +46,32 @@ int verifierExistencePartie(FILE *bdd_parties, const char *nom_partie_a_verifier
     return 0;
 }
 
-void creerPartie(FILE *bdd_parties)
+void creerPartie(FILE *bddParties)
 {
     PARTIE partie;
-    int nombre_parties = compterNombreParties(bdd_parties);
+    int nombreParties = compterNombreParties(bddParties);
     int partie_existe = 0;
 
     printf("Entrez le nom de la partie : ");
     scanf("%s", partie.nom);
 
-    partie_existe = verifierExistencePartie(bdd_parties, partie.nom);
+    partie_existe = verifierExistencePartie(bddParties, partie.nom);
 
-    if (partie_existe) {
+    if (partie_existe)
+    {
         printf("Ce nom de partie est déjà utilisé par une autre partie, veuillez en choisir un autre ou reprenez cette partie.\n");
-    } else {
-        partie.id = nombre_parties + 1;
+    }
+    else
+    {
+        partie.id = nombreParties + 1;
 
-        fseek(bdd_parties, 0, SEEK_END);
-        if (fwrite(&partie, sizeof(PARTIE), 1, bdd_parties) != 1) {
+        fseek(bddParties, 0, SEEK_END);
+        if (fwrite(&partie, sizeof(PARTIE), 1, bddParties) != 1)
+        {
             perror("Erreur lors de l'écriture dans le fichier");
-        } else {
+        }
+        else
+        {
             printf("Les informations ont été enregistrées avec succès.\n");
         }
     }

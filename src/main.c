@@ -14,7 +14,8 @@
 #include "fichier.c"
 #include "utilisateur.c"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     afficherTexteIntro();
     afficherMenuPrincipal();
 
