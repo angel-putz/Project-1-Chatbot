@@ -26,7 +26,7 @@ void afficherTexteIntro()
     printf("        \\/                 \\/        \\/         \\/        \\/\\/                         \\/         \\/  \n");
 
     printf("\n\n*** Bienvenue dans APOCALYPSE : Survive or Die ***\n\n");
-    
+
     printf("L'année est 2043. Une épidémie incontrôlable a transformé la majeure partie de la population\n");
     printf("en zombies assoiffés de sang. Le monde tel que nous le connaissions a disparu, et seuls les\n");
     printf("plus courageux ou les plus chanceux ont survécu.\n\n");
@@ -45,10 +45,10 @@ void afficherTexteIntro()
 void afficherMenuPrincipal()
 {
     FILE *bdd_utilisateurs = NULL;
-	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
-    
+    bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
+
     FILE *bdd_parties = NULL;
-	bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
+    bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
 
     char choix = ' ';
 
@@ -61,30 +61,30 @@ void afficherMenuPrincipal()
         printf("A) Mode Admin\n");
         printf("\nVotre choix : ");
         scanf(" %c", &choix); // Lecture du caractère choisi par l'utilisateur
-        getchar(); // Vider le tampon d'entrée pour enlever le caractère '\n'
+        getchar();            // Vider le tampon d'entrée pour enlever le caractère '\n'
 
         switch (choix)
         {
-            case 'Q':
-                printf("\nFermeture du programme.\n");
-                break;
-            case 'c':
-            case 'C':
-                printf("\nCréer une partie.\n");
-                creerPartie(bdd_parties);
-                break;
-            case 'r':
-            case 'R':
-                printf("\nReprendre une partie.\n");
-                break;
-            case 'a':
-            case 'A':
-                printf("\nMode Admin.\n");
-                demanderMdpAdmin();
-                break;
-            default:
-                printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
-                break;
+        case 'Q':
+            printf("\nFermeture du programme.\n");
+            break;
+        case 'c':
+        case 'C':
+            printf("\nCréer une partie.\n");
+            creerPartie(bdd_parties);
+            break;
+        case 'r':
+        case 'R':
+            printf("\nReprendre une partie.\n");
+            break;
+        case 'a':
+        case 'A':
+            printf("\nMode Admin.\n");
+            demanderMdpAdmin();
+            break;
+        default:
+            printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
+            break;
         }
     }
     return;

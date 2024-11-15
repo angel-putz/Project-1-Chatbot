@@ -9,7 +9,7 @@ typedef struct
     int id;
     char nom[TAILLE_NOM_PARTIE];
     int utilisateurId;
-}PARTIE;
+} PARTIE;
 
 int compterNombreParties(FILE *bdd_parties);
 int verifierExistencePartie(FILE *bdd_parties, const char *nom_partie_a_verifier);
@@ -35,8 +35,10 @@ int verifierExistencePartie(FILE *bdd_parties, const char *nom_partie_a_verifier
 {
     PARTIE partie;
     fseek(bdd_parties, 0, SEEK_SET);
-    while (fread(&partie, sizeof(PARTIE), 1, bdd_parties)) {
-        if (strcmp(partie.nom, nom_partie_a_verifier) == 0) {
+    while (fread(&partie, sizeof(PARTIE), 1, bdd_parties))
+    {
+        if (strcmp(partie.nom, nom_partie_a_verifier) == 0)
+        {
             return 1;
         }
     }
@@ -55,15 +57,21 @@ void creerPartie(FILE *bdd_parties)
 
     partie_existe = verifierExistencePartie(bdd_parties, partie.nom);
 
-    if (partie_existe) {
+    if (partie_existe)
+    {
         printf("Ce nom de partie est déjà utilisé par une autre partie, veuillez en choisir un autre ou reprenez cette partie.\n");
-    } else {
+    }
+    else
+    {
         partie.id = nombre_parties + 1;
 
         fseek(bdd_parties, 0, SEEK_END);
-        if (fwrite(&partie, sizeof(PARTIE), 1, bdd_parties) != 1) {
+        if (fwrite(&partie, sizeof(PARTIE), 1, bdd_parties) != 1)
+        {
             perror("Erreur lors de l'écriture dans le fichier");
-        } else {
+        }
+        else
+        {
             printf("Les informations ont été enregistrées avec succès.\n");
         }
     }
