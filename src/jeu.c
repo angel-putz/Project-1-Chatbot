@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #define NOM_DOSSIER_BDD "bdd"
 #define NOM_FICHIER_PARTIES "parties.bin"
 

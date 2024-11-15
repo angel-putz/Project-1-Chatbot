@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #define TAILLE_NOM_PARTIE 31
 
 typedef struct

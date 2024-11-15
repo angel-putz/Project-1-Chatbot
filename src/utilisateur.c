@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #define TAILLE_PSEUDO 21
 #define OUI 0
 #define NON 1

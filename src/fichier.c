@@ -1,3 +1,7 @@
+/*
+@author = clementfavarel
+*/
+
 #ifdef _WIN32
     #include <direct.h>
     #define MKDIR(dossier) _mkdir(dossier)
