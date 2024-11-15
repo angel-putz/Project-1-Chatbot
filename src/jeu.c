@@ -3,6 +3,7 @@
 */
 
 #define NOM_DOSSIER_BDD "bdd"
+#define NOM_FICHIER_UTILISATEURS "utilisateurs.bin"
 #define NOM_FICHIER_PARTIES "parties.bin"
 
 void afficherTexteIntro();
@@ -43,6 +44,12 @@ void afficherTexteIntro()
 
 void afficherMenuPrincipal()
 {
+    FILE *bdd_utilisateurs = NULL;
+	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
+    
+    FILE *bdd_parties = NULL;
+	bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
+
     char choix = ' ';
 
     while (choix != 'Q')
@@ -64,10 +71,7 @@ void afficherMenuPrincipal()
             case 'c':
             case 'C':
                 printf("\nCréer une partie.\n");
-                FILE *bdd_parties = NULL;
-	            bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
                 creerPartie(bdd_parties);
-                fermerFichier(bdd_parties);
                 break;
             case 'r':
             case 'R':
@@ -84,4 +88,7 @@ void afficherMenuPrincipal()
         }
     }
     return;
+
+    fermerFichier(bdd_utilisateurs);
+    fermerFichier(bdd_parties);
 }
