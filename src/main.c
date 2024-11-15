@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <stdlib.h>
 #include "jeu.c"
+#include "partie.c"
 #include "admin.c"
 #include "fichier.c"
 #include "utilisateur.c"

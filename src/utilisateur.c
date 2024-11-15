@@ -1,8 +1,8 @@
 #define TAILLE_PSEUDO 21
 #define OUI 0
 #define NON 1
-#define NOM_FICHIER "utilisateurs.bin"
-#define NOM_DOSSIER "bdd"
+#define NOM_DOSSIER_BDD "bdd"
+#define NOM_FICHIER_UTILISATEURS "utilisateurs.bin"
 
 typedef struct
 {
@@ -25,7 +25,7 @@ int compterNombreUtilisateurs(FILE *bdd_utilisateurs);
 void afficherMenuUtilisateur()
 {
     FILE *bdd_utilisateurs = NULL;
-	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER, NOM_FICHIER);
+	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
 
     UTILISATEUR utilisateur;
 
