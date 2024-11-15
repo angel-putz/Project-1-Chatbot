@@ -7,3 +7,5 @@
 
 # N'ignore pas les repertoires
 !*/
+
+build/*

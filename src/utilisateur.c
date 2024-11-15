@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-
 #define TAILLE_PSEUDO 21
 #define OUI 0
 #define NON 1
@@ -14,7 +11,7 @@ typedef struct
     int partieId;
 }UTILISATEUR;
 
-void menuUtilisateur();
+void afficherMenuUtilisateur();
 void listerUtilisateurs(FILE *bdd_utilisateurs);
 void afficherUtilisateur(UTILISATEUR *utilisateur);
 void creerUtilisateur(FILE *bdd_utilisateurs);
@@ -25,7 +22,7 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs);
 UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, char *pseudo_cherche);
 int compterNombreUtilisateurs(FILE *bdd_utilisateurs);
 
-void menuUtilisateur()
+void afficherMenuUtilisateur()
 {
     FILE *bdd_utilisateurs = NULL;
 	bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER, NOM_FICHIER);
