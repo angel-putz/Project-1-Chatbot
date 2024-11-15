@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <termios.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 #include "jeu.c"
 #include "admin.c"
 #include "fichier.c"
