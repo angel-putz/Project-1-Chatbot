@@ -10,43 +10,43 @@
 #define MKDIR(dossier) mkdir(dossier, 0777)
 #endif
 
-FILE *ouvrirFichier(char *nom_fichier);
-void fermerFichier(FILE *fichier_ouvert);
-FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier);
+FILE *ouvrirFichier(char *nomFichier);
+void fermerFichier(FILE *fichierOuvert);
+FILE *ouvrirFichierDansDossier(char *nomDossier, char *nomFichier);
 
-FILE *ouvrirFichier(char *nom_fichier)
+FILE *ouvrirFichier(char *nomFichier)
 {
     FILE *fichier = NULL;
-    fichier = fopen(nom_fichier, "a");
+    fichier = fopen(nomFichier, "a");
     fclose(fichier);
-    fichier = fopen(nom_fichier, "r+");
+    fichier = fopen(nomFichier, "r+");
     return fichier;
 }
 
-void fermerFichier(FILE *fichier_ouvert)
+void fermerFichier(FILE *fichierOuvert)
 {
-    fclose(fichier_ouvert);
+    fclose(fichierOuvert);
     return;
 }
 
-FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier)
+FILE *ouvrirFichierDansDossier(char *nomDossier, char *nomFichier)
 {
     FILE *fichier = NULL;
-    char chemin_complet[256];
+    char cheminComplet[256];
 
-    snprintf(chemin_complet, sizeof(chemin_complet), "%s/%s", nom_dossier, nom_fichier);
+    snprintf(cheminComplet, sizeof(cheminComplet), "%s/%s", nomDossier, nomFichier);
 
-    fichier = fopen(chemin_complet, "a");
+    fichier = fopen(cheminComplet, "a");
 
     if (fichier == NULL)
     {
-        if (MKDIR(nom_dossier) != 0)
+        if (MKDIR(nomDossier) != 0)
         {
             perror("Erreur lors de la création du dossier");
             return NULL;
         }
 
-        fichier = fopen(chemin_complet, "a");
+        fichier = fopen(cheminComplet, "a");
         if (fichier == NULL)
         {
             perror("Erreur lors de l'ouverture ou de la création du fichier");
@@ -56,7 +56,7 @@ FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier)
 
     fclose(fichier);
 
-    fichier = fopen(chemin_complet, "r+");
+    fichier = fopen(cheminComplet, "r+");
     if (fichier == NULL)
     {
         perror("Erreur lors de l'ouverture du fichier en mode r+");

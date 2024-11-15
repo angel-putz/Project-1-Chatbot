@@ -16,20 +16,20 @@ typedef struct
 } UTILISATEUR;
 
 void afficherMenuUtilisateur();
-void listerUtilisateurs(FILE *bdd_utilisateurs);
+void listerUtilisateurs(FILE *bddUtilisateurs);
 void afficherUtilisateur(UTILISATEUR *utilisateur);
-void creerUtilisateur(FILE *bdd_utilisateurs);
-void consulterUtilisateur(FILE *bdd_utilisateurs);
-int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier);
-void modifierUtilisateur(FILE *bdd_utilisateurs);
-void supprimerUtilisateur(FILE *bdd_utilisateurs);
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche);
-int compterNombreUtilisateurs(FILE *bdd_utilisateurs);
+void creerUtilisateur(FILE *bddUtilisateurs);
+void consulterUtilisateur(FILE *bddUtilisateurs);
+int verifierExistencePseudo(FILE *bddUtilisateurs, const char *pseudoAVerifier);
+void modifierUtilisateur(FILE *bddUtilisateurs);
+void supprimerUtilisateur(FILE *bddUtilisateurs);
+UTILISATEUR rechercherUtilisateurParNom(FILE *bddUtilisateurs, const char *pseudoCherche);
+int compterNombreUtilisateurs(FILE *bddUtilisateurs);
 
 void afficherMenuUtilisateur()
 {
-    FILE *bdd_utilisateurs = NULL;
-    bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
+    FILE *bddUtilisateurs = NULL;
+    bddUtilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
 
     UTILISATEUR utilisateur;
 
@@ -56,27 +56,27 @@ void afficherMenuUtilisateur()
         case 'l':
         case 'L':
             printf("\nLister les utilisateurs\n");
-            listerUtilisateurs(bdd_utilisateurs);
+            listerUtilisateurs(bddUtilisateurs);
             break;
         case 'c':
         case 'C':
             printf("\nConsulter les informations d'un utilisateur\n");
-            consulterUtilisateur(bdd_utilisateurs);
+            consulterUtilisateur(bddUtilisateurs);
             break;
         case 'a':
         case 'A':
             printf("\nAjouter un utilisateur\n");
-            creerUtilisateur(bdd_utilisateurs);
+            creerUtilisateur(bddUtilisateurs);
             break;
         case 'm':
         case 'M':
             printf("\nModifier un utilisateur\n");
-            modifierUtilisateur(bdd_utilisateurs);
+            modifierUtilisateur(bddUtilisateurs);
             break;
         case 's':
         case 'S':
             printf("\nSupprimer un utilisateur\n");
-            supprimerUtilisateur(bdd_utilisateurs);
+            supprimerUtilisateur(bddUtilisateurs);
             break;
         default:
             printf("\nChoix invalide, assurez-vous de saisir un caractère valide\n");
@@ -84,19 +84,19 @@ void afficherMenuUtilisateur()
         }
     }
 
-    fermerFichier(bdd_utilisateurs);
+    fermerFichier(bddUtilisateurs);
     return;
 }
 
-void listerUtilisateurs(FILE *bdd_utilisateurs)
+void listerUtilisateurs(FILE *bddUtilisateurs)
 {
     printf("\nListe des utilisateurs:\n");
 
     UTILISATEUR utilisateur;
     int utilisateurTrouve = 0; // Indicateur pour savoir si au moins un utilisateur a été trouvé
 
-    fseek(bdd_utilisateurs, 0, SEEK_SET);
-    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bdd_utilisateurs))
+    fseek(bddUtilisateurs, 0, SEEK_SET);
+    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs))
     {
         afficherUtilisateur(&utilisateur);
         utilisateurTrouve = 1; // On a trouvé au moins un utilisateur
@@ -115,10 +115,10 @@ void afficherUtilisateur(UTILISATEUR *utilisateur)
     printf("  - Pseudo : %s\n", utilisateur->pseudo);
 }
 
-void creerUtilisateur(FILE *bdd_utilisateurs)
+void creerUtilisateur(FILE *bddUtilisateurs)
 {
     UTILISATEUR utilisateur;
-    int nombre_utilisateurs = compterNombreUtilisateurs(bdd_utilisateurs);
+    int nombreUtilisateurs = compterNombreUtilisateurs(bddUtilisateurs);
     int pseudoExiste = 0;
 
     // Saisie des informations de la personne
@@ -126,7 +126,7 @@ void creerUtilisateur(FILE *bdd_utilisateurs)
     scanf("%s", utilisateur.pseudo);
 
     // Vérifier si le pseudo existe déjà
-    pseudoExiste = verifierExistencePseudo(bdd_utilisateurs, utilisateur.pseudo);
+    pseudoExiste = verifierExistencePseudo(bddUtilisateurs, utilisateur.pseudo);
 
     if (pseudoExiste)
     {
@@ -135,11 +135,11 @@ void creerUtilisateur(FILE *bdd_utilisateurs)
     else
     {
         // Initialisation des valeurs par défaut
-        utilisateur.id = nombre_utilisateurs + 1;
+        utilisateur.id = nombreUtilisateurs + 1;
 
         // Écriture de la personne dans le fichier
-        fseek(bdd_utilisateurs, 0, SEEK_END);
-        if (fwrite(&utilisateur, sizeof(UTILISATEUR), 1, bdd_utilisateurs) != 1)
+        fseek(bddUtilisateurs, 0, SEEK_END);
+        if (fwrite(&utilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs) != 1)
         {
             perror("Erreur lors de l'écriture dans le fichier");
         }
@@ -150,15 +150,15 @@ void creerUtilisateur(FILE *bdd_utilisateurs)
     }
 }
 
-void consulterUtilisateur(FILE *bdd_utilisateurs)
+void consulterUtilisateur(FILE *bddUtilisateurs)
 {
-    char pseudo_cherche[TAILLE_PSEUDO];
+    char pseudoCherche[TAILLE_PSEUDO];
     UTILISATEUR utilisateur;
 
     printf("Entrez le pseudo de l'utilisateur à consulter : ");
-    scanf("%s", pseudo_cherche);
+    scanf("%s", pseudoCherche);
 
-    utilisateur = rechercherUtilisateurParNom(bdd_utilisateurs, pseudo_cherche);
+    utilisateur = rechercherUtilisateurParNom(bddUtilisateurs, pseudoCherche);
 
     if (utilisateur.id != 0)
     {
@@ -170,13 +170,13 @@ void consulterUtilisateur(FILE *bdd_utilisateurs)
     }
 }
 
-int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifier)
+int verifierExistencePseudo(FILE *bddUtilisateurs, const char *pseudoAVerifier)
 {
     UTILISATEUR utilisateur;
-    fseek(bdd_utilisateurs, 0, SEEK_SET);
-    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bdd_utilisateurs))
+    fseek(bddUtilisateurs, 0, SEEK_SET);
+    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs))
     {
-        if (strcmp(utilisateur.pseudo, pseudo_a_verifier) == 0)
+        if (strcmp(utilisateur.pseudo, pseudoAVerifier) == 0)
         {
             return 1; // Le pseudo existe déjà
         }
@@ -184,32 +184,32 @@ int verifierExistencePseudo(FILE *bdd_utilisateurs, const char *pseudo_a_verifie
     return 0; // Le pseudo n'existe pas
 }
 
-void modifierUtilisateur(FILE *bdd_utilisateurs)
+void modifierUtilisateur(FILE *bddUtilisateurs)
 {
-    char pseudo_cherche[TAILLE_PSEUDO];
-    UTILISATEUR utilisateur_a_modifier;
+    char pseudoCherche[TAILLE_PSEUDO];
+    UTILISATEUR utilisateurAModifier;
 
     printf("Entrez le pseudo de l'utilisateur à modifier : ");
-    scanf("%s", pseudo_cherche);
+    scanf("%s", pseudoCherche);
 
-    utilisateur_a_modifier = rechercherUtilisateurParNom(bdd_utilisateurs, pseudo_cherche);
+    utilisateurAModifier = rechercherUtilisateurParNom(bddUtilisateurs, pseudoCherche);
 
-    if (utilisateur_a_modifier.id != 0)
+    if (utilisateurAModifier.id != 0)
     { // Utilisateur trouvé
         // Affichage des informations actuelles de l'utilisateur
-        afficherUtilisateur(&utilisateur_a_modifier);
+        afficherUtilisateur(&utilisateurAModifier);
 
         // Demander les modifications
         printf("Entrez le nouveau pseudo (laissez vide pour ne pas modifier) : ");
-        scanf("%s", pseudo_cherche);
-        if (strlen(pseudo_cherche) > 0)
+        scanf("%s", pseudoCherche);
+        if (strlen(pseudoCherche) > 0)
         {
-            strcpy(utilisateur_a_modifier.pseudo, pseudo_cherche);
+            strcpy(utilisateurAModifier.pseudo, pseudoCherche);
         }
 
         // Réécrire l'utilisateur modifié dans le fichier
-        fseek(bdd_utilisateurs, -sizeof(UTILISATEUR), SEEK_CUR); // Repositionner le curseur
-        fwrite(&utilisateur_a_modifier, sizeof(UTILISATEUR), 1, bdd_utilisateurs);
+        fseek(bddUtilisateurs, -sizeof(UTILISATEUR), SEEK_CUR); // Repositionner le curseur
+        fwrite(&utilisateurAModifier, sizeof(UTILISATEUR), 1, bddUtilisateurs);
         printf("Utilisateur modifié avec succès.\n");
     }
     else
@@ -218,26 +218,26 @@ void modifierUtilisateur(FILE *bdd_utilisateurs)
     }
 }
 
-void supprimerUtilisateur(FILE *bdd_utilisateurs)
+void supprimerUtilisateur(FILE *bddUtilisateurs)
 {
-    char pseudo_cherche[TAILLE_PSEUDO];
-    UTILISATEUR utilisateur_a_supprimer;
+    char pseudoCherche[TAILLE_PSEUDO];
+    UTILISATEUR utilisateurASupprimer;
 
     printf("Entrez le pseudo de l'utilisateur à supprimer : ");
-    scanf("%s", pseudo_cherche);
+    scanf("%s", pseudoCherche);
 
-    utilisateur_a_supprimer = rechercherUtilisateurParNom(bdd_utilisateurs, pseudo_cherche);
+    utilisateurASupprimer = rechercherUtilisateurParNom(bddUtilisateurs, pseudoCherche);
 
-    if (utilisateur_a_supprimer.id != 0)
+    if (utilisateurASupprimer.id != 0)
     { // Utilisateur trouvé
         // Supprimer l'utilisateur en écrasant avec le prochain utilisateur
-        UTILISATEUR utilisateur_suivant;
-        while (fread(&utilisateur_suivant, sizeof(UTILISATEUR), 1, bdd_utilisateurs))
+        UTILISATEUR utilisateurSuivant;
+        while (fread(&utilisateurSuivant, sizeof(UTILISATEUR), 1, bddUtilisateurs))
         {
-            fseek(bdd_utilisateurs, -2 * sizeof(UTILISATEUR), SEEK_CUR); // Repositionner le curseur
-            fwrite(&utilisateur_suivant, sizeof(UTILISATEUR), 1, bdd_utilisateurs);
+            fseek(bddUtilisateurs, -2 * sizeof(UTILISATEUR), SEEK_CUR); // Repositionner le curseur
+            fwrite(&utilisateurSuivant, sizeof(UTILISATEUR), 1, bddUtilisateurs);
         }
-        if (ftruncate(fileno(bdd_utilisateurs), ftell(bdd_utilisateurs) - sizeof(UTILISATEUR)) != 0)
+        if (ftruncate(fileno(bddUtilisateurs), ftell(bddUtilisateurs) - sizeof(UTILISATEUR)) != 0)
         {
             perror("Erreur lors du tronquage du fichier");
         }
@@ -252,35 +252,35 @@ void supprimerUtilisateur(FILE *bdd_utilisateurs)
     }
 }
 
-UTILISATEUR rechercherUtilisateurParNom(FILE *bdd_utilisateurs, const char *pseudo_cherche)
+UTILISATEUR rechercherUtilisateurParNom(FILE *bddUtilisateurs, const char *pseudoCherche)
 {
     UTILISATEUR utilisateur;
 
-    fseek(bdd_utilisateurs, 0, SEEK_SET);
-    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bdd_utilisateurs))
+    fseek(bddUtilisateurs, 0, SEEK_SET);
+    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs))
     {
-        if (strcmp(utilisateur.pseudo, pseudo_cherche) == 0)
+        if (strcmp(utilisateur.pseudo, pseudoCherche) == 0)
         {
             return utilisateur; // Retourner la personne trouvée
         }
     }
 
-    printf("Personne avec le nom '%s' non trouvée dans le fichier.\n", pseudo_cherche);
+    printf("Personne avec le nom '%s' non trouvée dans le fichier.\n", pseudoCherche);
     UTILISATEUR utilisateurNonTrouvee;
     memset(&utilisateurNonTrouvee, 0, sizeof(UTILISATEUR));
     return utilisateurNonTrouvee;
 }
 
-int compterNombreUtilisateurs(FILE *bdd_utilisateurs)
+int compterNombreUtilisateurs(FILE *bddUtilisateurs)
 {
     UTILISATEUR utilisateur;
-    int nombre_utilisateurs = 0;
+    int nombreUtilisateurs = 0;
 
-    fseek(bdd_utilisateurs, 0, SEEK_SET);
-    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bdd_utilisateurs))
+    fseek(bddUtilisateurs, 0, SEEK_SET);
+    while (fread(&utilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs))
     {
-        nombre_utilisateurs = nombre_utilisateurs + 1;
+        nombreUtilisateurs = nombreUtilisateurs + 1;
     }
 
-    return nombre_utilisateurs;
+    return nombreUtilisateurs;
 }

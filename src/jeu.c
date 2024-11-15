@@ -8,9 +8,9 @@
 
 void afficherTexteIntro();
 void afficherMenuPrincipal();
-FILE *ouvrirFichierDansDossier(char *nom_dossier, char *nom_fichier);
-void creerPartie(FILE *bdd_parties);
-void fermerFichier(FILE *fichier_ouvert);
+FILE *ouvrirFichierDansDossier(char *nomDossier, char *nomFichier);
+void creerPartie(FILE *bddParties);
+void fermerFichier(FILE *fichierOuvert);
 void demanderMdpAdmin();
 
 void afficherTexteIntro()
@@ -44,11 +44,11 @@ void afficherTexteIntro()
 
 void afficherMenuPrincipal()
 {
-    FILE *bdd_utilisateurs = NULL;
-    bdd_utilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
+    FILE *bddUtilisateurs = NULL;
+    bddUtilisateurs = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_UTILISATEURS);
 
-    FILE *bdd_parties = NULL;
-    bdd_parties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
+    FILE *bddParties = NULL;
+    bddParties = ouvrirFichierDansDossier(NOM_DOSSIER_BDD, NOM_FICHIER_PARTIES);
 
     char choix = ' ';
 
@@ -71,7 +71,7 @@ void afficherMenuPrincipal()
         case 'c':
         case 'C':
             printf("\nCréer une partie.\n");
-            creerPartie(bdd_parties);
+            creerPartie(bddParties);
             break;
         case 'r':
         case 'R':
@@ -89,6 +89,6 @@ void afficherMenuPrincipal()
     }
     return;
 
-    fermerFichier(bdd_utilisateurs);
-    fermerFichier(bdd_parties);
+    fermerFichier(bddUtilisateurs);
+    fermerFichier(bddParties);
 }
