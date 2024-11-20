@@ -6,7 +6,7 @@
 
 #define MAX_SCENARIOS 10
 
-unsigned int random_seed = 97342; // On utilise une graine fixe
+unsigned int randomSeed = 97342; // On utilise une graine fixe
 
 typedef struct
 {
@@ -26,23 +26,23 @@ typedef struct
 {
     int type;              // Type d'événement, identifiant unique
     char description[200]; // Description de l'événement
-    int effet_nourriture;  // Effet sur la nourriture
-    int effet_sante;       // Effet sur la santé
-    int effet_moral;       // Effet sur le moral
-    int effet_tours;       // Effet sur les tours
+    int effetNourriture;  // Effet sur la nourriture
+    int effetSante;       // Effet sur la santé
+    int effetMoral;       // Effet sur le moral
+    int effetTours;       // Effet sur les tours
     int used;              // Pour savoir si le scénario est déjà apparu
 } Scenario;
 
 void intro();
 unsigned int simple_random();                   // Une seed générer semi-aléatoirement à chaque nouvelle run idéalement, va permettre de générer les probabilités de la RUN,
-void menu_interaction(Personnage *pp);          // Va contenir les actions disponibles par l'utilisateur: manger/bouger/soigner/chercher)
-void action_bouger(Personnage *pp);             // Bouger va permettre de generer un event qui possède différente finalités en fonctions de probalités, cete action coute un tour(+1) et du moral (-5)
-void action_chercher(Personnage *pp);           // Cette action va engager une variable chance, qui va permettre de trouver ou pas des ressources
+void menuInteraction(Personnage *pp);          // Va contenir les actions disponibles par l'utilisateur: manger/bouger/soigner/chercher)
+void actionBouger(Personnage *pp);             // Bouger va permettre de generer un event qui possède différente finalités en fonctions de probalités, cete action coute un tour(+1) et du moral (-5)
+void actionChercher(Personnage *pp);           // Cette action va engager une variable chance, qui va permettre de trouver ou pas des ressources
 void soigner(Personnage *pp);            // Cette fontion va permettre de ragagner de la santé
 void manger(Personnage *pp);             // Cette fonction permet de combler la faim et de remonter le moral
-void evenement_pnj(Personnage *pp);             // Fonction pour gérer les événements PNJ avec choix
-void afficher_ressources(const Personnage *pp); // Cette fonction permet à l'utilisateur de voir ses ressources disponibles
-int contient_mot_clef();
+void evenementPnj(Personnage *pp);             // Fonction pour gérer les événements PNJ avec choix
+void afficherRessources(const Personnage *pp); // Cette fonction permet à l'utilisateur de voir ses ressources disponibles
+int contientMotClef();
 
 
 int main(int argc, char **argv)
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
     {
         printf("\n--- Début du tour %d (tour max : 100)---\n", pp.tours + 1); // Affichage du tour actuel
         printf("\n---Que Souhaitez-Vous Faire ?");
-        menu_interaction(&pp); // Afficher les interractions
+        menuInteraction(&pp); // Afficher les interractions
 
         if (pp.faim <= 0)
         { // Gestion de la faim et conséquences sur la santé
@@ -97,13 +97,13 @@ void intro()
 unsigned int simple_random()
 {
     // Paramètres de LCG : ces valeurs fonctionnent bien pour générer des nombres pseudo-aléatoires
-    random_seed = (random_seed * 1103515245 + 12345) & 0x7fffffff;
-    return random_seed;
+    randomSeed = (random_seed * 1103515245 + 12345) & 0x7fffffff;
+    return randomSeed;
 }
 
 
 // Fonction qui vérifie si un des synonymes est présent dans la phrase de l'utilisateur
-int contient_mot_clef(const char *phrase, const char *synonymes[], int taille) {
+int contientMotClef(const char *phrase, const char *synonymes[], int taille) {
     for (int i = 0; i < taille; i++) {
         if (strstr(phrase, synonymes[i]) != NULL) {
             return 1; // Le mot-clé a été trouvé dans la phrase
@@ -114,11 +114,11 @@ int contient_mot_clef(const char *phrase, const char *synonymes[], int taille) {
 
 void menu_interaction(Personnage *pp) {
 
-    const char *tab_manger[] = {"manger", "repas", "nourriture"};
-    const char *tab_bouger[] = {"marcher", "bouger", "déplacer"};
-    const char *tab_chercher[] = {"chercher", "trouver", "explorer"};
-    const char *tab_soigner[] = {"soigner", "guérir", "traiter"};
-    const char *tab_afficher[] = {"afficher", "montrer", "voir"};
+    const char *tabManger[] = {"manger", "repas", "nourriture"};
+    const char *tabBouger[] = {"marcher", "bouger", "déplacer"};
+    const char *tabChercher[] = {"chercher", "trouver", "explorer"};
+    const char *tabSoigner[] = {"soigner", "guérir", "traiter"};
+    const char *tabAfficher[] = {"afficher", "montrer", "voir"};
 
     char choix[100]; // Tableau pour stocker la réponse de l'utilisateur
 
@@ -129,23 +129,23 @@ void menu_interaction(Personnage *pp) {
     choix[strcspn(choix, "\n")] = '\0';
 
     // Vérifier chaque action en utilisant le tableau de synonymes correspondant et afficher la partie d'histoire liée
-    if (contient_mot_clef(choix, tab_manger, sizeof(tab_manger) / sizeof(tab_manger[0]))) {
+    if (contientMotClef(choix, tab_manger, sizeof(tab_manger) / sizeof(tab_manger[0]))) {
         manger(pp);
     }
-    else if (contient_mot_clef(choix, tab_bouger, sizeof(tab_bouger) / sizeof(tab_bouger[0]))) {
-        action_bouger(pp);
+    else if (contientMotClef(choix, tab_bouger, sizeof(tab_bouger) / sizeof(tab_bouger[0]))) {
+        actionBouger(pp);
         pp->tours += 2;  // Compte pour 2 tours
     }
-    else if (contient_mot_clef(choix, tab_chercher, sizeof(tab_chercher) / sizeof(tab_chercher[0]))) {
-        action_chercher(pp);
+    else if (contientMotClef(choix, tab_chercher, sizeof(tab_chercher) / sizeof(tab_chercher[0]))) {
+        actionChercher(pp);
         pp->tours++;  // Compte pour 1 tour
     }
-    else if (contient_mot_clef(choix, tab_soigner, sizeof(tab_soigner) / sizeof(tab_soigner[0]))) {
+    else if (contientMotClef(choix, tab_soigner, sizeof(tab_soigner) / sizeof(tab_soigner[0]))) {
         soigner(pp);
 
     }
-    else if (contient_mot_clef(choix, tab_afficher, sizeof(tab_afficher) / sizeof(tab_afficher[0]))) {
-        afficher_ressources(pp);
+    else if (contientMotClef(choix, tab_afficher, sizeof(tab_afficher) / sizeof(tab_afficher[0]))) {
+        afficherRessources(pp);
     }
     else {
         printf("Choix invalide. Veuillez réessayer.\n");
@@ -206,12 +206,12 @@ void soigner(Personnage *p){
 
 }
 
-void evenement_pnj(Personnage *pp)
+void evenementPnj(Personnage *pp)
 {
     int evenement = simple_random() % 10;
 }
 
-void action_bouger(Personnage *pp)
+void actionBouger(Personnage *pp)
 {
     printf("%s bouge vers une nouvelle zone...\n", pp->nom);
     pp->moral -= 5; // Bouger coûte du moral
@@ -236,7 +236,7 @@ void action_bouger(Personnage *pp)
     }
 }
 
-void action_chercher(Personnage *pp)
+void actionChercher(Personnage *pp)
 {
     int chance = simple_random() % 100;
     if (chance < 50)
@@ -255,7 +255,7 @@ void action_chercher(Personnage *pp)
     }
 }
 
-void afficher_ressources(const Personnage *pp)
+void afficherRessources(const Personnage *pp)
 {
     printf("\n--- Ressources de %s ---\n", pp->nom);
     printf("Santé      : %d\n", pp->sante);
