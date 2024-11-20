@@ -14,8 +14,8 @@ typedef struct
 int compterNombreParties(FILE *bddParties);
 int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier);
 void creerPartie(FILE *bddParties);
-PARTIE rechercherPartieParNom(FILE *bddParties, const char *nomCherche);
-void reprendrePartie();
+// PARTIE rechercherPartieParNom(FILE *bddParties, const char *nomCherche);
+// void reprendrePartie(FILE *bddParties);
 
 int compterNombreParties(FILE *bddParties)
 {

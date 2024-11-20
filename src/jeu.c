@@ -6,8 +6,11 @@
 #define NOM_FICHIER_UTILISATEURS "utilisateurs.bin"
 #define NOM_FICHIER_PARTIES "parties.bin"
 
+// Fonctions du fichier
 void afficherTexteIntro();
 void afficherMenuPrincipal();
+
+// Dépendances
 FILE *ouvrirFichierDansDossier(char *nomDossier, char *nomFichier);
 void creerPartie(FILE *bddParties);
 void fermerFichier(FILE *fichierOuvert);
