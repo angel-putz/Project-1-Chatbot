@@ -97,7 +97,7 @@ void intro()
 unsigned int simple_random()
 {
     // Paramètres de LCG : ces valeurs fonctionnent bien pour générer des nombres pseudo-aléatoires
-    randomSeed = (random_seed * 1103515245 + 12345) & 0x7fffffff;
+    randomSeed = (randomSeed * 1103515245 + 12345) & 0x7fffffff;
     return randomSeed;
 }
 
@@ -112,7 +112,7 @@ int contientMotClef(const char *phrase, const char *synonymes[], int taille) {
     return 0; // Aucun mot-clé trouvé
 }
 
-void menu_interaction(Personnage *pp) {
+void menuInteraction(Personnage *pp) {
 
     const char *tabManger[] = {"manger", "repas", "nourriture"};
     const char *tabBouger[] = {"marcher", "bouger", "déplacer"};
@@ -129,22 +129,22 @@ void menu_interaction(Personnage *pp) {
     choix[strcspn(choix, "\n")] = '\0';
 
     // Vérifier chaque action en utilisant le tableau de synonymes correspondant et afficher la partie d'histoire liée
-    if (contientMotClef(choix, tab_manger, sizeof(tab_manger) / sizeof(tab_manger[0]))) {
+    if (contientMotClef(choix, tabManger, sizeof(tabManger) / sizeof(tabManger[0]))) {
         manger(pp);
     }
-    else if (contientMotClef(choix, tab_bouger, sizeof(tab_bouger) / sizeof(tab_bouger[0]))) {
+    else if (contientMotClef(choix, tabBouger, sizeof(tabBouger) / sizeof(tabBouger[0]))) {
         actionBouger(pp);
         pp->tours += 2;  // Compte pour 2 tours
     }
-    else if (contientMotClef(choix, tab_chercher, sizeof(tab_chercher) / sizeof(tab_chercher[0]))) {
+    else if (contientMotClef(choix, tabChercher, sizeof(tabChercher) / sizeof(tabChercher[0]))) {
         actionChercher(pp);
         pp->tours++;  // Compte pour 1 tour
     }
-    else if (contientMotClef(choix, tab_soigner, sizeof(tab_soigner) / sizeof(tab_soigner[0]))) {
+    else if (contientMotClef(choix, tabSoigner, sizeof(tabSoigner) / sizeof(tabSoigner[0]))) {
         soigner(pp);
 
     }
-    else if (contientMotClef(choix, tab_afficher, sizeof(tab_afficher) / sizeof(tab_afficher[0]))) {
+    else if (contientMotClef(choix, tabAfficher, sizeof(tabAfficher) / sizeof(tabAfficher[0]))) {
         afficherRessources(pp);
     }
     else {
@@ -227,7 +227,7 @@ void actionBouger(Personnage *pp)
     else if (evenement < 80)
     {
         printf("Vous rencontrez un PNJ amical.\n");
-        evenement_pnj(pp); // Appelle la fonction pour un événement PNJ avec choix
+        evenementPnj(pp); // Appelle la fonction pour un événement PNJ avec choix
     }
     else
     {
