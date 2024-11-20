@@ -12,7 +12,7 @@ void afficherMenuPrincipal();
 
 // Dépendances
 FILE *ouvrirFichierDansDossier(char *nomDossier, char *nomFichier);
-void creerPartie(FILE *bddParties);
+void creerPartie(FILE *bddParties, FILE *bddUtilisateurs);
 void fermerFichier(FILE *fichierOuvert);
 void demanderMdpAdmin();
 
@@ -74,7 +74,7 @@ void afficherMenuPrincipal()
         case 'c':
         case 'C':
             printf("\nCréer une partie.\n");
-            creerPartie(bddParties);
+            creerPartie(bddParties, bddUtilisateurs);
             break;
         case 'r':
         case 'R':

@@ -12,7 +12,6 @@ typedef struct
 {
     int id;
     char pseudo[TAILLE_PSEUDO];
-    int partieId;
 } UTILISATEUR;
 
 void afficherMenuUtilisateur();

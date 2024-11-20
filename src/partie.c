@@ -3,6 +3,7 @@
 */
 
 #define TAILLE_NOM_PARTIE 31
+#define TAILLE_PSEUDO 21
 
 typedef struct
 {
@@ -11,11 +12,16 @@ typedef struct
     int utilisateurId;
 } PARTIE;
 
+// Fonctions du fichier
 int compterNombreParties(FILE *bddParties);
 int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier);
-void creerPartie(FILE *bddParties);
+void creerPartie(FILE *bddParties, FILE *bddUtilisateurs);
 // PARTIE rechercherPartieParNom(FILE *bddParties, const char *nomCherche);
 // void reprendrePartie(FILE *bddParties);
+
+// Dépendances
+int verifierExistencePseudo(FILE *bddUtilisateurs, const char *pseudoAVerifier);
+UTILISATEUR rechercherUtilisateurParNom(FILE *bddUtilisateurs, const char *pseudoCherche);
 
 int compterNombreParties(FILE *bddParties)
 {
@@ -46,11 +52,27 @@ int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier)
     return 0;
 }
 
-void creerPartie(FILE *bddParties)
+void creerPartie(FILE *bddParties, FILE *bddUtilisateurs)
 {
     PARTIE partie;
     int nombreParties = compterNombreParties(bddParties);
     int partie_existe = 0;
+
+    char pseudo[TAILLE_PSEUDO];
+    printf("Entrez votre pseudo : ");
+    scanf("%s", pseudo);
+
+    // Vérifier l'existence du pseudo
+    int utilisateurExiste = verifierExistencePseudo(bddUtilisateurs, pseudo);
+
+    if (!utilisateurExiste)
+    {
+        printf("L'utilisateur n'existe pas.\n");
+        return;
+    }
+
+    UTILISATEUR utilisateur = rechercherUtilisateurParNom(bddUtilisateurs, pseudo);
+    partie.utilisateurId = utilisateur.id;
 
     printf("Entrez le nom de la partie : ");
     scanf("%s", partie.nom);
