@@ -8,11 +8,12 @@
 #include <termios.h>
 #include <sys/stat.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "jeu.c"
-#include "partie.c"
-#include "admin.c"
 #include "fichier.c"
 #include "utilisateur.c"
+#include "partie.c"
+#include "admin.c"
 
 int main(int argc, char **argv)
 {
