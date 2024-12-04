@@ -1,0 +1,10 @@
+Vous trouvez un entrepôt abandonné. Il semble contenir des provisions, mais des bruits inquiétants viennent de l'intérieur. Effet : Nourriture +2, Moral -5.
+Vous croisez un survivant blessé qui demande de l'aide. Aidez-vous ou passez-vous votre chemin ? Effet : Santé -5, Soins -1, Moral +10.
+Vous découvrez un camp de survivants. Ils vous proposent de partager leurs ressources si vous partagez les vôtres. Effet : Nourriture -1, Soins +2, Moral +5.
+Vous êtes attaqué par un groupe de zombies affamés. Vous parvenez à vous défendre mais êtes légèrement blessé. Effet : Santé -10, Nourriture -2.
+En explorant une forêt, vous trouvez un ruisseau et une source d'eau potable. Cela remonte votre moral. Effet : Moral +15.
+Vous entendez des pleurs venant d'une maison. En explorant, vous trouvez un enfant abandonné. Vous le ramenez avec vous. Effet : Moral +20, Nourriture -3.
+Un piège se déclenche dans une zone que vous explorez. Vous perdez du temps et êtes légèrement blessé. Effet : Santé -5, Tours +2.
+Une tempête éclate pendant que vous explorez une zone. Vous êtes trempé et démoralisé. Effet : Moral -10.
+Vous trouvez une trousse de premiers soins dans une pharmacie abandonnée. Effet : Soins +3.
+Vous entendez des voix hostiles à proximité et décidez de battre en retraite pour éviter des ennuis. Effet : Moral -5, Tours +1.
