@@ -16,6 +16,7 @@ typedef struct
 int compterNombreParties(FILE *bddParties);
 int verifierExistencePartie(FILE *bddParties, const char *nomPartieAVerifier);
 void creerPartie(FILE *bddParties, FILE *bddUtilisateurs);
+void commencerAventure(PARTIE *partie);
 // PARTIE rechercherPartieParNom(FILE *bddParties, const char *nomCherche);
 // void reprendrePartie(FILE *bddParties);
 
@@ -67,12 +68,43 @@ void creerPartie(FILE *bddParties, FILE *bddUtilisateurs)
 
     if (!utilisateurExiste)
     {
-        printf("L'utilisateur n'existe pas.\n");
-        return;
-    }
+        char choix;
+        printf("L'utilisateur n'existe pas. Voulez-vous créer un nouvel utilisateur ? (O/N) : ");
+        scanf(" %c", &choix);
 
-    UTILISATEUR utilisateur = rechercherUtilisateurParNom(bddUtilisateurs, pseudo);
-    partie.utilisateurId = utilisateur.id;
+        if (choix == 'O' || choix == 'o')
+        {
+            // Créer un nouvel utilisateur
+            UTILISATEUR nouvelUtilisateur;
+            strcpy(nouvelUtilisateur.pseudo, pseudo);
+
+            // Obtenir le prochain ID disponible
+            int nombreUtilisateurs = compterNombreUtilisateurs(bddUtilisateurs);
+            nouvelUtilisateur.id = nombreUtilisateurs + 1;
+
+            // Écrire le nouvel utilisateur dans le fichier
+            fseek(bddUtilisateurs, 0, SEEK_END);
+            if (fwrite(&nouvelUtilisateur, sizeof(UTILISATEUR), 1, bddUtilisateurs) != 1)
+            {
+                perror("Erreur lors de la création de l'utilisateur");
+                return;
+            }
+
+            // Utiliser le nouvel utilisateur pour la partie
+            partie.utilisateurId = nouvelUtilisateur.id;
+        }
+        else
+        {
+            printf("Création de partie annulée.\n");
+            return;
+        }
+    }
+    else
+    {
+        // Si l'utilisateur existe déjà, le rechercher
+        UTILISATEUR utilisateur = rechercherUtilisateurParNom(bddUtilisateurs, pseudo);
+        partie.utilisateurId = utilisateur.id;
+    }
 
     printf("Entrez le nom de la partie : ");
     scanf("%s", partie.nom);
@@ -94,9 +126,7 @@ void creerPartie(FILE *bddParties, FILE *bddUtilisateurs)
         }
         else
         {
-            printf("Les informations ont été enregistrées avec succès.\n");
+            commencerAventure(&partie);
         }
     }
-
-    return;
 }
