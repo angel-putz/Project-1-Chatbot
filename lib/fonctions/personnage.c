@@ -2,7 +2,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
-
+#include <stdbool.h>
 
 #define MAX_SCENARIOS 10
 
@@ -22,51 +22,60 @@ typedef struct
 
 } Personnage;       // Sutrure utile pour chaque personnage créé
 
-typedef struct
-{
-    int type;              // Type d'événement, identifiant unique
-    char description[200]; // Description de l'événement
-    int effetNourriture;  // Effet sur la nourriture
-    int effetSante;       // Effet sur la santé
-    int effetMoral;       // Effet sur le moral
-    int effetTours;       // Effet sur les tours
-    int used;              // Pour savoir si le scénario est déjà apparu
-} Scenario;
+typedef struct {
+    int id;
+    char description[200];
+    int effetNourriture;
+    int effetSante;
+    int effetMoral;
+    int suivants[MAX_SCENARIOS]; // Liste des événements suivants
+    int nbSuivants; // Nombre d'événements suivants
+} Event;
+
 
 void intro();
 unsigned int simple_random();                   // Une seed générer semi-aléatoirement à chaque nouvelle run idéalement, va permettre de générer les probabilités de la RUN,
-void menuInteraction(Personnage *pp);          // Va contenir les actions disponibles par l'utilisateur: manger/bouger/soigner/chercher)
-void actionBouger(Personnage *pp);             // Bouger va permettre de generer un event qui possède différente finalités en fonctions de probalités, cete action coute un tour(+1) et du moral (-5)
+void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentEvent);          // Va contenir les actions disponibles par l'utilisateur: manger/bouger/soigner/chercher)
+void actionBouger(Personnage *pp, Event events[], int nbEvents, int *currentEvent);             // Bouger va permettre de generer un event qui possède différente finalités en fonctions de probalités, cete action coute un tour(+1) et du moral (-5)
 void actionChercher(Personnage *pp);           // Cette action va engager une variable chance, qui va permettre de trouver ou pas des ressources
 void soigner(Personnage *pp);            // Cette fontion va permettre de ragagner de la santé
 void manger(Personnage *pp);             // Cette fonction permet de combler la faim et de remonter le moral
 void evenementPnj(Personnage *pp);             // Fonction pour gérer les événements PNJ avec choix
 void afficherRessources(const Personnage *pp); // Cette fonction permet à l'utilisateur de voir ses ressources disponibles
 int contientMotClef();
+int chargerEvenements(const char *filename, Event *events, int maxEvents);
 
 
-int main(int argc, char **argv)
-{
 
-    intro();
-    Personnage pp = {"Aventurier", 100, 100, 5, 1, 10, 0, 0, 0}; // Appel de la fonction perso avec les stats correspondantes deja stockées dans perso.bin
 
-    while (pp.sante > 0)
-    {
-        printf("\n--- Début du tour %d (tour max : 100)---\n", pp.tours + 1); // Affichage du tour actuel
-        printf("\n---Que Souhaitez-Vous Faire ?");
-        menuInteraction(&pp); // Afficher les interractions
+int main() {
+    // Initialisation du personnage
+    Personnage pp = {"Aventurier", 100, 100, 5, 1, 10, 0, 0, 0};
 
-        if (pp.faim <= 0)
-        { // Gestion de la faim et conséquences sur la santé
-            pp.sante -= 5;
+    // Charger les événements
+    Event events[100]; // Tableau d'événements
+    int nbEvents = chargerEvenements("story.txt", events, 100); // Charger depuis le fichier
+    int currentEvent = 0; // Premier événement
+
+    // Boucle principale du jeu
+    while (pp.sante > 0) {
+        printf("\n--- Début du tour %d ---\n", pp.tours + 1);
+
+        // Interagir avec le joueur
+        menuInteraction(&pp, events, nbEvents, &currentEvent);
+
+        // Vérifier si le personnage a trop faim
+        if (pp.faim <= 0) {
+            pp.sante -= 5; // Réduire la santé si la faim atteint 0
             printf("Attention ! %s a trop faim et perd de la santé.\n", pp.nom);
         }
     }
 
+    // Fin du jeu
     printf("Votre personnage n'a plus de santé. Fin du jeu.\n");
     return 0;
 }
+
 
 
 void intro()
@@ -103,46 +112,37 @@ unsigned int simple_random()
 
 
 // Fonction qui vérifie si un des synonymes est présent dans la phrase de l'utilisateur
-int contientMotClef(const char *phrase, const char *synonymes[], int taille) {
-    for (int i = 0; i < taille; i++) {
-        if (strstr(phrase, synonymes[i]) != NULL) {
-            return 1; // Le mot-clé a été trouvé dans la phrase
-        }
-    }
-    return 0; // Aucun mot-clé trouvé
-}
-
-void menuInteraction(Personnage *pp) {
-
+void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentEvent) {
+    // Tableaux de synonymes pour différentes actions
     const char *tabManger[] = {"manger", "repas", "nourriture"};
     const char *tabBouger[] = {"marcher", "bouger", "déplacer"};
     const char *tabChercher[] = {"chercher", "trouver", "explorer"};
     const char *tabSoigner[] = {"soigner", "guérir", "traiter"};
     const char *tabAfficher[] = {"afficher", "montrer", "voir"};
 
-    char choix[100]; // Tableau pour stocker la réponse de l'utilisateur
+    char choix[100]; // Stocke la réponse de l'utilisateur
 
+    // Demander à l'utilisateur d'entrer une action
     printf("\nQue souhaitez-vous faire ? Décrivez votre action : ");
     fgets(choix, sizeof(choix), stdin);
 
-    // Retirer le saut de ligne de la fin de la chaîne si présent
+    // Retirer le saut de ligne de la chaîne si présent
     choix[strcspn(choix, "\n")] = '\0';
 
-    // Vérifier chaque action en utilisant le tableau de synonymes correspondant et afficher la partie d'histoire liée
+    // Vérifier et exécuter l'action en fonction des mots-clés
     if (contientMotClef(choix, tabManger, sizeof(tabManger) / sizeof(tabManger[0]))) {
         manger(pp);
     }
     else if (contientMotClef(choix, tabBouger, sizeof(tabBouger) / sizeof(tabBouger[0]))) {
-        actionBouger(pp);
-        pp->tours += 2;  // Compte pour 2 tours
+        actionBouger(pp, events, nbEvents, currentEvent);
+        pp->tours += 2; // Compte pour 2 tours
     }
     else if (contientMotClef(choix, tabChercher, sizeof(tabChercher) / sizeof(tabChercher[0]))) {
         actionChercher(pp);
-        pp->tours++;  // Compte pour 1 tour
+        pp->tours++; // Compte pour 1 tour
     }
     else if (contientMotClef(choix, tabSoigner, sizeof(tabSoigner) / sizeof(tabSoigner[0]))) {
         soigner(pp);
-
     }
     else if (contientMotClef(choix, tabAfficher, sizeof(tabAfficher) / sizeof(tabAfficher[0]))) {
         afficherRessources(pp);
@@ -151,8 +151,10 @@ void menuInteraction(Personnage *pp) {
         printf("Choix invalide. Veuillez réessayer.\n");
     }
 
-    pp->faim -= 1;  // La faim diminue à chaque action
+    // Réduire la faim du personnage après chaque action
+    pp->faim -= 1;
 }
+
 
 void manger (Personnage *p){
      if (p->cuistot == 1) {
@@ -211,29 +213,52 @@ void evenementPnj(Personnage *pp)
     int evenement = simple_random() % 10;
 }
 
-void actionBouger(Personnage *pp)
+
+// Fonction pour charger les événements depuis story.txt
+int chargerEvenements(const char *filename, Event events[], int maxEvents) {
+    FILE *file = fopen(filename, "r");
+    if (!file) {
+        perror("Erreur lors de l'ouverture du fichier d'événements");
+        return 0; // Retourner 0 si le fichier ne peut pas être ouvert
+    }
+
+    int i = 0; // Indice pour remplir le tableau d'événements
+    while (i < maxEvents && fscanf(file, " %[^\n]s", events[i].description) == 1) {
+        events[i].id = i; // Donner un identifiant unique à chaque événement
+        i++;
+    }
+
+    fclose(file); // Fermer le fichier après lecture
+    return i; // Retourner le nombre d'événements chargés
+}
+
+void actionBouger(Personnage *pp, Event events[], int nbEvents, int *currentEvent) {
+    if (*currentEvent >= nbEvents) {
+        printf("Plus d'événements disponibles à explorer.\n");
+        return; // Retourner si tous les événements ont été parcourus
+    }
+
+    // Afficher l'événement actuel
+    printf("Événement : %s\n", events[*currentEvent].description);
+
+    // Augmenter l'indice pour passer à l'événement suivant
+    (*currentEvent)++;
+}
+
+// Fonction qui vérifie si un des synonymes est présent dans la phrase de l'utilisateur
+int contientMotClef(const char *phrase, const char *synonymes[], int taille)
 {
-    printf("%s bouge vers une nouvelle zone...\n", pp->nom);
-    pp->moral -= 5; // Bouger coûte du moral
+    for (int i = 0; i < taille; i++)
+    {
+        if (strstr(phrase, synonymes[i]) != NULL)
+        {
+            return 1; // Le mot-clé a été trouvé dans la phrase
+        }
+    }
+    return 0; // Aucun mot-clé trouvé
+}
+{
 
-    // Utilisation de simple_random pour générer un "événement"
-    int evenement = simple_random() % 100; // Obtenir un nombre entre 0 et 99
-
-    if (evenement < 40)
-    {
-        printf("Un zombie apparaît soudainement ! Vous perdez de la santé en vous échappant.\n");
-        pp->sante -= 10;
-    }
-    else if (evenement < 80)
-    {
-        printf("Vous rencontrez un PNJ amical.\n");
-        evenementPnj(pp); // Appelle la fonction pour un événement PNJ avec choix
-    }
-    else
-    {
-        printf("Vous trouvez un campement abandonné avec des provisions !\n");
-        pp->nourriture += 2;
-    }
 }
 
 void actionChercher(Personnage *pp)
