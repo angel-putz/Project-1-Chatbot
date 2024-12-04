@@ -13,6 +13,7 @@
 #include "fichier.c"
 #include "utilisateur.c"
 #include "partie.c"
+#include "aventure.c"
 #include "admin.c"
 
 int main(int argc, char **argv)
