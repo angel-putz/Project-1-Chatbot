@@ -24,6 +24,8 @@ typedef struct {
     int effetNourriture;
     int effetSante;
     int effetMoral;
+    int effetCuistot;
+    int effetSoigneur;
     int suivants[MAX_SCENARIOS]; // Liste des événements suivants
     int nbSuivants;             // Nombre d'événements suivants
 } Event;
@@ -98,8 +100,8 @@ int chargerEvenementsEtAppliquer(const char *filename, Event *events, int maxEve
         }
 
         if (effetStr) {
-            sscanf(effetStr, "Sante:%d,Nourriture:%d,Moral:%d",
-                   &events[i].effetSante, &events[i].effetNourriture, &events[i].effetMoral);
+            sscanf(effetStr, "Sante:%d,Nourriture:%d,Moral:%d,Cuistot:%d,Soigneur:%d",
+                   &events[i].effetSante, &events[i].effetNourriture, &events[i].effetMoral, &events[i].effetCuistot, &events[i].effetSoigneur);
         }
 
         i++;
@@ -151,7 +153,7 @@ void actionBouger(Personnage *pp, Event events[], int nbEvents, int *currentEven
     }
 
     Event *event = &events[*currentEvent];
-    
+
     // Débogage avant l'application de l'événement
     printf("Avant l'événement : Santé = %d, Nourriture = %d, Moral = %d\n",
            pp->sante, pp->nourriture, pp->moral);
@@ -164,6 +166,8 @@ void actionBouger(Personnage *pp, Event events[], int nbEvents, int *currentEven
     pp->sante += event->effetSante;
     pp->nourriture += event->effetNourriture;
     pp->moral += event->effetMoral;
+    pp->cuistot += event->effetCuistot;
+    pp->soigneur += event->effetSoigneur;
 
     // Vérification des limites des ressources
     if (pp->sante > 100) pp->sante = 100;
