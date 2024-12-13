@@ -6,16 +6,14 @@
 
 unsigned int randomSeed = 97342; // On utilise une graine fixe
 
-EVENT EFFET NOURRITURE EST VIDE CEST POURQUOI LADDITION NE FONCTIONNE PAS
-
 typedef struct {
     char nom[30];
     int sante;
     int moral;
-    int nourriture; // Quantité de nourriture possédée par le personnage
+    int nourriture; // QuantitÃ© de nourriture possÃ©dÃ©e par le personnage
     int soin;       // Ressource plus rare et utilisable par la soigneuse uniquement
     int faim;       // Cette variable faiblit lorsque le joueur ne mange pas
-    int tours;      // Variable pour le nombre total de tours passés
+    int tours;      // Variable pour le nombre total de tours passÃ©s
     int cuistot;
     int soigneur;
 } Personnage;
@@ -26,8 +24,8 @@ typedef struct {
     int effetNourriture;
     int effetSante;
     int effetMoral;
-    int suivants[MAX_SCENARIOS]; // Liste des événements suivants
-    int nbSuivants;             // Nombre d'événements suivants
+    int suivants[MAX_SCENARIOS]; // Liste des Ã©vÃ©nements suivants
+    int nbSuivants;             // Nombre d'Ã©vÃ©nements suivants
 } Event;
 
 void intro();
@@ -46,27 +44,27 @@ int main() {
     Personnage pp = {"Aventurier", 100, 100, 5, 1, 10, 0, 0, 0};
     intro();
 
-    // Charger les événements
-    Event events[100]; // Tableau d'événements
+    // Charger les Ã©vÃ©nements
+    Event events[100]; // Tableau d'Ã©vÃ©nements
     int nbEvents = chargerEvenementsEtAppliquer("story.txt", events, 100, &pp); // Charger depuis le fichier
-    int currentEvent = 0; // Premier événement
+    int currentEvent = 0; // Premier Ã©vÃ©nement
 
     // Boucle principale du jeu
     while (pp.sante > 0) {
-        printf("\n--- Début du tour %d ---\n", pp.tours + 1);
+        printf("\n--- DÃ©but du tour %d ---\n", pp.tours + 1);
 
         // Interagir avec le joueur
         menuInteraction(&pp, events, nbEvents, &currentEvent);
 
-        // Vérifier si le personnage a trop faim
+        // VÃ©rifier si le personnage a trop faim
         if (pp.faim <= 0) {
-            pp.sante -= 5; // Réduire la santé si la faim atteint 0
-            printf("Attention ! %s a trop faim et perd de la santé.\n", pp.nom);
+            pp.sante -= 5; // RÃ©duire la santÃ© si la faim atteint 0
+            printf("Attention ! %s a trop faim et perd de la santÃ©.\n", pp.nom);
         }
     }
 
     // Fin du jeu
-    printf("Votre personnage n'a plus de santé. Fin du jeu.\n");
+    printf("Votre personnage n'a plus de santÃ©. Fin du jeu.\n");
     return 0;
 }
 
@@ -83,7 +81,7 @@ unsigned int simple_random() {
 int chargerEvenementsEtAppliquer(const char *filename, Event *events, int maxEvents, Personnage *pp) {
     FILE *file = fopen(filename, "r");
     if (!file) {
-        perror("Erreur lors de l'ouverture du fichier d'événements");
+        perror("Erreur lors de l'ouverture du fichier d'Ã©vÃ©nements");
         return 0;
     }
 
@@ -106,8 +104,8 @@ int chargerEvenementsEtAppliquer(const char *filename, Event *events, int maxEve
 
         i++;
     }
-    printf("Chargement de l'événement %d : %s\n", i, events[i].description);
-    printf("Effets : Santé = %d, Nourriture = %d, Moral = %d\n",
+    printf("Chargement de l'Ã©vÃ©nement %d : %s\n", i, events[i].description);
+    printf("Effets : SantÃ© = %d, Nourriture = %d, Moral = %d\n",
        events[i].effetSante, events[i].effetNourriture, events[i].effetMoral);
 
 
@@ -117,13 +115,13 @@ int chargerEvenementsEtAppliquer(const char *filename, Event *events, int maxEve
 
 void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentEvent) {
     const char *tabManger[] = {"manger", "repas", "nourriture"};
-    const char *tabBouger[] = {"marcher", "bouger", "déplacer"};
+    const char *tabBouger[] = {"marcher", "bouger", "dÃ©placer"};
     const char *tabChercher[] = {"chercher", "trouver", "explorer"};
-    const char *tabSoigner[] = {"soigner", "guérir", "traiter"};
+    const char *tabSoigner[] = {"soigner", "guÃ©rir", "traiter"};
     const char *tabAfficher[] = {"afficher", "montrer", "voir"};
 
     char choix[100];
-    printf("\nQue souhaitez-vous faire ? Décrivez votre action : ");
+    printf("\nQue souhaitez-vous faire ? DÃ©crivez votre action : ");
     fgets(choix, sizeof(choix), stdin);
     choix[strcspn(choix, "\n")] = '\0';
 
@@ -140,7 +138,7 @@ void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentE
     } else if (contientMotClef(choix, tabAfficher, sizeof(tabAfficher) / sizeof(tabAfficher[0]))) {
         afficherRessources(pp);
     } else {
-        printf("Choix invalide. Veuillez réessayer.\n");
+        printf("Choix invalide. Veuillez rÃ©essayer.\n");
     }
 
     pp->faim -= 1;
@@ -148,36 +146,36 @@ void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentE
 
 void actionBouger(Personnage *pp, Event events[], int nbEvents, int *currentEvent) {
     if (*currentEvent >= nbEvents) {
-        printf("Plus d'événements disponibles à explorer.\n");
+        printf("Plus d'Ã©vÃ©nements disponibles Ã  explorer.\n");
         return;
     }
 
     Event *event = &events[*currentEvent];
-
-    // Débogage avant l'application de l'événement
-    printf("Avant l'événement : Santé = %d, Nourriture = %d, Moral = %d\n",
+    
+    // DÃ©bogage avant l'application de l'Ã©vÃ©nement
+    printf("Avant l'Ã©vÃ©nement : SantÃ© = %d, Nourriture = %d, Moral = %d\n",
            pp->sante, pp->nourriture, pp->moral);
 
-    // Affichage de l'événement
-    printf("Événement : %s Effet : Nourriture %+d, Moral %+d, Santé %+d\n",
-           event->description, event->effetNourriture*2, event->effetMoral*2, event->effetSante*2);
+    // Affichage de l'Ã©vÃ©nement
+    printf("Ã‰vÃ©nement : %s Effet : Nourriture %+d, Moral %+d, SantÃ© %+d\n",
+           event->description, event->effetNourriture, event->effetMoral, event->effetSante);
 
-    // Mise à jour des ressources
+    // Mise Ã  jour des ressources
     pp->sante += event->effetSante;
     pp->nourriture += event->effetNourriture;
     pp->moral += event->effetMoral;
 
-    // Vérification des limites des ressources
+    // VÃ©rification des limites des ressources
     if (pp->sante > 100) pp->sante = 100;
     if (pp->sante < 0) pp->sante = 0;
     if (pp->moral > 100) pp->moral = 100;
     if (pp->moral < 0) pp->moral = 0;
 
-    // Débogage après l'application de l'événement
-    printf("Après l'événement : Santé = %d, Nourriture = %d, Moral = %d\n",
+    // DÃ©bogage aprÃ¨s l'application de l'Ã©vÃ©nement
+    printf("AprÃ¨s l'Ã©vÃ©nement : SantÃ© = %d, Nourriture = %d, Moral = %d\n",
            pp->sante, pp->nourriture, pp->moral);
 
-    (*currentEvent)++; // Passer à l'événement suivant
+    (*currentEvent)++; // Passer Ã  l'Ã©vÃ©nement suivant
 }
 
 
@@ -185,14 +183,14 @@ void actionChercher(Personnage *pp) {
     int chance = simple_random() % 100;
     if (chance < 50) {
         pp->nourriture += 2;
-        printf("%s a trouvé de la nourriture !\n", pp->nom);
+        printf("%s a trouvÃ© de la nourriture !\n", pp->nom);
     } else {
-        printf("%s n'a rien trouvé cette fois.\n", pp->nom);
+        printf("%s n'a rien trouvÃ© cette fois.\n", pp->nom);
     }
 
     if (chance < 10) {
         pp->soin += 1;
-        printf("%s a trouvé un soin rare !\n", pp->nom);
+        printf("%s a trouvÃ© un soin rare !\n", pp->nom);
     }
 }
 
@@ -200,11 +198,11 @@ void soigner(Personnage *p) {
     if (p->soigneur == 1 && p->soin > 0) {
         p->sante = (p->sante + 5 > 100) ? 100 : p->sante + 5;
         p->soin--;
-        printf("%s a été soigné. Santé : %d\n", p->nom, p->sante);
+        printf("%s a Ã©tÃ© soignÃ©. SantÃ© : %d\n", p->nom, p->sante);
     } else if (p->soin >= 2) {
         p->sante = (p->sante + 3 > 100) ? 100 : p->sante + 3;
         p->soin -= 2;
-        printf("%s a été partiellement soigné. Santé : %d\n", p->nom, p->sante);
+        printf("%s a Ã©tÃ© partiellement soignÃ©. SantÃ© : %d\n", p->nom, p->sante);
     } else {
         printf("Pas assez de soins disponibles.\n");
     }
@@ -214,7 +212,7 @@ void manger(Personnage *p) {
     if (p->nourriture > 0) {
         p->faim = (p->faim - 5 < 0) ? 0 : p->faim - 5;
         p->nourriture--;
-        printf("%s a mangé. Faim : %d, Nourriture restante : %d\n", p->nom, p->faim, p->nourriture);
+        printf("%s a mangÃ©. Faim : %d, Nourriture restante : %d\n", p->nom, p->faim, p->nourriture);
     } else {
         printf("Pas assez de nourriture disponible.\n");
     }
@@ -222,12 +220,12 @@ void manger(Personnage *p) {
 
 void afficherRessources(const Personnage *pp) {
     printf("\n--- Ressources de %s ---\n", pp->nom);
-    printf("Santé      : %d\n", pp->sante);
+    printf("SantÃ©      : %d\n", pp->sante);
     printf("Moral      : %d\n", pp->moral);
     printf("Nourriture : %d\n", pp->nourriture);
     printf("Soins      : %d\n", pp->soin);
     printf("Faim       : %d\n", pp->faim);
-    printf("Tours passés : %d\n", pp->tours);
+    printf("Tours passÃ©s : %d\n", pp->tours);
 }
 
 int contientMotClef(const char *phrase, const char *synonymes[], int taille) {
