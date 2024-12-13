@@ -1,0 +1,30 @@
+Vous trouvez un entrepôt abandonné. Il semble contenir des provisions, mais des bruits inquiétants viennent de l'intérieur.|Sante:0,Nourriture:2,Moral:-5,Tours:0,Soins:0
+Vous croisez un survivant blessé qui demande de l'aide. Aidez-vous ou passez-vous votre chemin ?|Sante:-5,Nourriture:0,Moral:10,Tours:0,Soins:-1
+Vous découvrez un camp de survivants. Ils vous proposent de partager leurs ressources si vous partagez les vôtres.|Sante:0,Nourriture:-1,Moral:5,Tours:0,Soins:2
+Vous êtes attaqué par un groupe de zombies affamés. Vous parvenez à vous défendre mais êtes légèrement blessé.|Sante:-10,Nourriture:-2,Moral:0,Tours:0,Soins:0
+En explorant une forêt, vous trouvez un ruisseau et une source d'eau potable. Cela remonte votre moral.|Sante:0,Nourriture:0,Moral:15,Tours:0,Soins:0
+Vous entendez des pleurs venant d'une maison. En explorant, vous trouvez un enfant abandonné. Vous le ramenez avec vous.|Sante:0,Nourriture:-3,Moral:20,Tours:0,Soins:0
+Un piège se déclenche dans une zone que vous explorez. Vous perdez du temps et êtes légèrement blessé.|Sante:-5,Nourriture:0,Moral:0,Tours:2,Soins:0
+Vous rencontrez un survivant qui propose de rejoindre votre groupe en tant que cuistot.|Sante:0,Nourriture:0,Moral:10,Cuistot:1,Soigneur:0
+Une tempête éclate pendant que vous explorez une zone. Vous êtes trempé et démoralisé.|Sante:0,Nourriture:0,Moral:-10,Tours:0,Soins:0
+Vous trouvez une trousse de premiers soins dans une pharmacie abandonnée.|Sante:0,Nourriture:0,Moral:0,Tours:0,Soins:3
+Vous entendez des voix hostiles à proximité et décidez de battre en retraite pour éviter des ennuis.|Sante:0,Nourriture:0,Moral:-5,Tours:1,Soins:0
+Vous trouvez un véhicule abandonné avec un peu de carburant. Vous décidez de l'utiliser pour explorer plus loin.|Santé: 0, Nourriture: 1, Moral: 5, Tours: 0, Soins: 0
+Vous tombez sur un groupe de survivants hostiles. Vous parvenez à vous échapper mais êtes blessé.|Santé: -8, Nourriture: 0, Moral: -5, Tours: 0, Soins: 0
+En fouillant une maison, vous trouvez des conserves et de l'eau potable.|Santé: 0, Nourriture: 3, Moral: 5, Tours: 0, Soins: 0
+Vous êtes pris dans un éboulement en explorant une grotte. Vous êtes blessé et perdez du temps.|Santé: -7, Nourriture: 0, Moral: -5, Tours: 2, Soins: 0
+Vous trouvez un chien errant qui décide de vous suivre. Sa présence vous réconforte.|Santé: 0, Nourriture: -1, Moral: 10, Tours: 0, Soins: 0
+Vous découvrez un jardin abandonné avec des légumes encore comestibles.|Santé: 0, Nourriture: 2, Moral: 5, Tours: 0, Soins: 0
+Vous êtes surpris par une embuscade de zombies. Vous parvenez à vous échapper mais êtes gravement blessé.|Santé: -15, Nourriture: -1, Moral: -10, Tours: 0, Soins: 0
+Vous trouvez un abri sûr pour la nuit, ce qui vous permet de bien vous reposer.|Santé: 5, Nourriture: 0, Moral: 10, Tours: 0, Soins: 0
+Vous rencontrez un marchand itinérant qui accepte de troquer des fournitures contre de la nourriture.|Santé: 0, Nourriture: -2, Moral: 5, Tours: 0, Soins: 2
+Vous rencontrez un survivant qui propose de rejoindre votre groupe en tant que soigneur.|Sante:0,Nourriture:0,Moral:10,Cuistot:0,Soigneur:1
+Vous trouvez un livre de survie dans une bibliothèque abandonnée. Cela vous donne de nouvelles idées pour survivre.|Santé: 0, Nourriture: 0, Moral: 10, Tours: 0, Soins: 0
+Vous êtes pris dans une embuscade de bandits. Vous parvenez à vous échapper mais perdez des provisions.|Santé: -5, Nourriture: -3, Moral: -5, Tours: 0, Soins: 0
+Vous trouvez un groupe de survivants amicaux qui vous offrent de la nourriture en échange de votre aide.|Santé: 0, Nourriture: 2, Moral: 5, Tours: 0, Soins: 0
+Vous découvrez une cache de médicaments dans un hôpital abandonné.|Santé: 0, Nourriture: 0, Moral: 0, Tours: 0, Soins: 3
+Vous êtes attaqué par des animaux sauvages en cherchant de la nourriture. Vous parvenez à les repousser mais êtes blessé.|Santé: -10, Nourriture: 0, Moral: -5, Tours: 0, Soins: 0
+Vous trouvez un ancien bunker militaire avec des provisions et des équipements.|Santé: 0, Nourriture: 3, Moral: 10, Tours: 0, Soins: 0
+Vous aidez un groupe de survivants à se défendre contre une horde de zombies. Ils vous remercient avec des provisions.|Santé: -5, Nourriture: 2, Moral: 10, Tours: 0, Soins: 0
+Vous trouvez un champ de baies sauvages. Elles sont comestibles et vous redonnent de l'énergie.|Santé: 0, Nourriture: 2, Moral: 5, Tours: 0, Soins: 0
+Vous êtes pris dans une tempête de neige. Vous trouvez un abri mais perdez du temps et des provisions.|Santé: -5, Nourriture: -2, Moral: -5, Tours: 1, Soins: 0
