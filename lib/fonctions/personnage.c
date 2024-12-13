@@ -116,11 +116,11 @@ int chargerEvenementsEtAppliquer(const char *filename, Event *events, int maxEve
 }
 
 void menuInteraction(Personnage *pp, Event events[], int nbEvents, int *currentEvent) {
-    const char *tabManger[] = {"manger", "repas", "nourriture"};
-    const char *tabBouger[] = {"marcher", "bouger", "déplacer"};
-    const char *tabChercher[] = {"chercher", "trouver", "explorer"};
-    const char *tabSoigner[] = {"soigner", "guérir", "traiter"};
-    const char *tabAfficher[] = {"afficher", "montrer", "voir"};
+    const char *tabManger[] = {"manger", "mange", "dévore", "consomme", "ingère", "grignote", "engloutis", "savoure", "déguste", "mastique", "croque"};
+    const char *tabBouger[] = {"bouger", "marche", "bouge", "avance", "remue", "glisse", "cours", "bondis", "saute", "navigue", "dérive"};
+    const char *tabChercher[] = {"chercher", "cherche", "trouve", "explore", "recherche", "fouille", "scrute", "inspecte", "décèle", "sonde", "investigue"};
+    const char *tabSoigner[] = {"soigner", "soigne", "guéris", "traite", "répare", "panse", "remédie", "apaise", "calme", "consolide", "restaure"};
+    const char *tabAfficher[] = {"afficher", "affiche", "montre", "présente", "expose", "illustre", "reflète", "dévoile", "démontre", "projette", "reproduis"};
 
     char choix[100];
     printf("\nQue souhaitez-vous faire ? Décrivez votre action : ");
