@@ -214,7 +214,7 @@ void soigner(Personnage *p) {
 
 void manger(Personnage *p) {
     if (p->nourriture > 0) {
-        p->faim = (p->faim - 5 < 0) ? 0 : p->faim - 5;
+        p->faim = (p->faim - 5 < 0) ? 0 : p->faim + 5;
         p->nourriture--;
         printf("%s a mangé. Faim : %d, Nourriture restante : %d\n", p->nom, p->faim, p->nourriture);
     } else {
