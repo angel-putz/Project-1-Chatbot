@@ -213,7 +213,12 @@ void soigner(Personnage *p) {
 }
 
 void manger(Personnage *p) {
-    if (p->nourriture > 0) {
+    if (p->cuistot == 1 && p->nourriture > 0)
+    {
+        p->faim = (p->faim - 8 < 0) ? 0 : p->faim - 8;
+        p->nourriture--;
+        printf("le cuistot a fait un bon repas vous avez bien manger. Faim : %d\n", p->faim);
+    }else if (p->nourriture > 0) {
         p->faim = (p->faim - 5 < 0) ? 0 : p->faim + 5;
         p->nourriture--;
         printf("%s a mangé. Faim : %d, Nourriture restante : %d\n", p->nom, p->faim, p->nourriture);
